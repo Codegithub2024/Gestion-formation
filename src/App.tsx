@@ -1,15 +1,54 @@
-import { Routes, Route, BrowserRouter, NavLink } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 function App() {
+  const [isOpen, setIsOpen] = useState<boolean>(() => {
+    const saved = localStorage.getItem("isOpen");
+    return saved !== null ? JSON.parse(saved) : "false";
+  });
+  const asideRef = useRef(null);
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+  }, [isOpen]);
+
+  console.log(isOpen);
+
+  useGSAP(() => {
+    gsap.to(asideRef.current, {
+      width: isOpen ? "300px" : "0px",
+      padding: isOpen ? "1rem" : "0px",
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  }, [isOpen]);
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path=""
           element={
-            <div className="bg-slate-900 h-screen flex justify-start">
-              <aside className="flex flex-col p-3 bg-slate-950 min-w-xs"></aside>
-              <main className="flex flex-col p-4">
+            <div
+              ref={mainRef}
+              className="bg-slate-900 h-screen flex justify-start"
+            >
+              <aside
+                ref={asideRef}
+                className={`good flex flex-col bg-slate-950 ${isOpen ? "w-75 p-3" : "w-0"} `}
+              ></aside>
+              <main className="flex flex-col p-4 gap-6">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="flex justify-center items-center p-3 px-5 cursor-pointer text-xs w-fit text-neutral-400 font-bold rounded-full bg-black/50"
+                >
+                  {isOpen ? "fermer" : "ouvrir"}
+                </button>
                 <NavLink to="/home" className="w-fit">
                   <button className="p-2 px-6 text-white rounded-full bg-blue-600 border-t border-t-blue-300 border-b border-b-blue-900 font-semibold tracking-tight leading-tight cursor-pointer hover:bg-blue-500 hover:shadow-[0_0_12px_0_#4C8DF6] ease-out transition-all duration-200 flex justify-center items-center uppercase hover:text-white text-sm h-9.5">
                     Continuer
