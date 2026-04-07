@@ -2,7 +2,14 @@ import { Outlet } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, useState } from "react";
-import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import {
+  Bubbles,
+  Heart,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Plus,
+} from "lucide-react";
+import PrimaryButton from "../components/PrimaryButton";
 
 export default function AdminLayout() {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
@@ -39,10 +46,10 @@ export default function AdminLayout() {
           asideRef.current,
           {
             // On force le départ de l'ancienne valeur
-            width: isOpen ? "0px" : "290px",
+            width: isOpen ? "48px" : "290px",
           },
           {
-            width: isOpen ? "290px" : "0px",
+            width: isOpen ? "290px" : "48px",
             duration: 0.4,
             ease: "power2.out",
           },
@@ -101,22 +108,32 @@ export default function AdminLayout() {
     <div ref={contentRef} className="flex">
       <aside
         ref={asideRef}
-        className={`flex flex-col ${isOpen ? "w-72.5" : "w-0"} bg-neutral-200 overflow-hidden sticky top-0 left-0 h-screen`}
+        className={`flex flex-col ${isOpen ? "w-72.5" : "w-12"} bg-neutral-200 overflow-hidden sticky top-0 left-0 h-screen`}
       >
-        Admin layout
-      </aside>
-      <main className="flex flex-col flex-1">
-        <nav className="flex  overflow-hidden p-2 border-b border-b-neutral-400">
+        <div className="flex flex-col">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="bg-neutral-300 rounded-md h-9.5 p-2.5 cursor-pointer"
+            className="bg-neutral-300 rounded-md h-8 p-2 cursor-pointer absolute top-2 right-2"
           >
             {isOpen ? (
-              <PanelLeftClose className="close" size={18} />
+              <PanelLeftClose className="close" size={16} />
             ) : (
-              <PanelLeftOpen className="open" size={18} />
+              <PanelLeftOpen className="open" size={16} />
             )}
           </button>
+        </div>
+      </aside>
+      <main className="flex flex-col flex-1">
+        <nav className="flex overflow-hidden justify-between p-2 min-h-12 bg-gray-100">
+          <PrimaryButton text="heart" buttonStyle="tertiary">
+            <Heart size={16} />
+          </PrimaryButton>
+          <PrimaryButton text="energy" buttonStyle="secondary">
+            <Bubbles size={16} />
+          </PrimaryButton>
+          <PrimaryButton text="Ajouter" buttonStyle="primary">
+            <Plus size={16} />
+          </PrimaryButton>
         </nav>
         <Outlet />
       </main>
