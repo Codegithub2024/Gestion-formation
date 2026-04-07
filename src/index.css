@@ -5,10 +5,12 @@
 }
 
 @theme{
-    --color-primary: #00C3FF;
-    --color-primary-text: #002A73;
-    --color-secondary: #FFCD19;
-    --color-secondary-text: #694B00;
-    --color-tertiary: #FF76CB;
-    --color-tertiary-text: #690044;
+    --color-primary-blue: #00C3FF;
+    --color-primary-blue-text: #002A73;
+    --color-primary-amber: #FFCD19;
+    --color-primary-amber-text: #694B00;
+    --color-primary-pink: #FF76CB;
+    --color-primary-pink-text: #690044;
+    --color-primary-red: #FF363A;
+    --color-primary-red-text: #FFD6D7;
 }

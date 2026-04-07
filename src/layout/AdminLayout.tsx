@@ -1,13 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useEffect, useRef, useState } from "react";
 import {
   Bubbles,
+  Flame,
   Heart,
   PanelLeftClose,
   PanelLeftOpen,
   Plus,
+  Sun,
 } from "lucide-react";
 import PrimaryButton from "../components/PrimaryButton";
 
@@ -124,14 +126,19 @@ export default function AdminLayout() {
         </div>
       </aside>
       <main className="flex flex-col flex-1">
-        <nav className="flex overflow-hidden justify-between p-2 min-h-12 bg-gray-100">
-          <PrimaryButton text="heart" buttonStyle="tertiary">
+        <nav className="flex overflow-hidden justify-between p-2 min-h-12 bg-white">
+          <PrimaryButton text="heart" buttonStyle="pink">
             <Heart size={16} />
           </PrimaryButton>
-          <PrimaryButton text="energy" buttonStyle="secondary">
-            <Bubbles size={16} />
+          <NavLink to="/home">
+            <PrimaryButton text="energy" buttonStyle="amber">
+              <Sun size={16} />
+            </PrimaryButton>
+          </NavLink>
+          <PrimaryButton text="fire" buttonStyle="red">
+            <Flame size={16} />
           </PrimaryButton>
-          <PrimaryButton text="Ajouter" buttonStyle="primary">
+          <PrimaryButton text="Nouvelle session" buttonStyle="blue">
             <Plus size={16} />
           </PrimaryButton>
         </nav>
