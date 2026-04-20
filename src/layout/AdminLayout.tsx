@@ -1,148 +1,37 @@
-import { NavLink, Outlet } from "react-router-dom";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { useEffect, useRef, useState } from "react";
-import {
-  Bubbles,
-  Flame,
-  Heart,
-  PanelLeftClose,
-  PanelLeftOpen,
-  Plus,
-  Sun,
-} from "lucide-react";
-import PrimaryButton from "../components/PrimaryButton";
+import { Outlet } from "react-router-dom";
+import { useRef } from "react";
+import { FireExtinguisher, Plus, Send } from "lucide-react";
+import Button from "../components/Button";
+import { useAuthStore } from "../store/auth.store";
+import SideBar from "../components/SideBar";
 
 export default function AdminLayout() {
-  const [isOpen, setIsOpen] = useState<boolean>(() => {
-    const saved = localStorage.getItem("isOpen");
-    return saved !== null ? JSON.parse(saved) : "false";
-  });
-  const asideRef = useRef(null);
+  const user = useAuthStore((state) => state.user);
+
   const contentRef = useRef(null);
 
-  useEffect(() => {
-    localStorage.setItem("isOpen", JSON.stringify(isOpen));
-  }, [isOpen]);
-
-  console.log(isOpen);
-
-  // 1. On garde en mémoire si c'est le montage initial
-  const isFirstRender = useRef(true);
-  // 2. On garde en mémoire la version précédente pour comparer
-  const prevOpen = useRef(isOpen);
-
-  useGSAP(
-    () => {
-      // CONDITION 1 : Si c'est le tout premier affichage (ou retour de route), on ne fait RIEN.
-      // Le CSS Tailwind (w-75 ou w-0) s'occupe de placer l'élément correctement sans flash.
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        prevOpen.current = isOpen; // On synchronise
-        return;
-      }
-
-      // CONDITION 2 : On n'anime que si isOpen a changé
-      if (prevOpen.current !== isOpen) {
-        gsap.fromTo(
-          asideRef.current,
-          {
-            // On force le départ de l'ancienne valeur
-            width: isOpen ? "48px" : "290px",
-          },
-          {
-            width: isOpen ? "290px" : "48px",
-            duration: 0.4,
-            ease: "power2.out",
-          },
-        );
-
-        isOpen
-          ? toggleAnimation({
-              open: ".close",
-              close: ".open",
-            })
-          : toggleAnimation({
-              open: ".open",
-              close: ".close",
-            });
-        // On met à jour la valeur précédente pour le prochain rendu
-        prevOpen.current = isOpen;
-      }
-    },
-    {
-      dependencies: [isOpen],
-      scope: contentRef,
-      revertOnUpdate: true,
-    },
-  );
-
-  function toggleAnimation({ open, close }: { open: string; close: string }) {
-    const tl = gsap.timeline();
-    tl.fromTo(
-      close,
-      {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-      {
-        scale: 0,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-    ).fromTo(
-      open,
-      {
-        scale: 0,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-      {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-    );
-  }
-
   return (
-    <div ref={contentRef} className="flex">
-      <aside
-        ref={asideRef}
-        className={`flex flex-col ${isOpen ? "w-72.5" : "w-12"} bg-neutral-200 overflow-hidden sticky top-0 left-0 h-screen`}
-      >
-        <div className="flex flex-col">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="bg-neutral-300 rounded-md h-8 p-2 cursor-pointer absolute top-2 right-2"
-          >
-            {isOpen ? (
-              <PanelLeftClose className="close" size={16} />
-            ) : (
-              <PanelLeftOpen className="open" size={16} />
-            )}
-          </button>
+    <div ref={contentRef} className="flex bg-primary-amber-text/5">
+      <SideBar contentRef={contentRef} />
+
+      <main className="p-2 pl-0 flex flex-col flex-1">
+        <div className="rounded-lg flex flex-col flex-1 bg-white border border-neutral-200 overflow-hidden">
+          <nav className="border-b border-b-neutral-200">
+            <div className="container mx-auto flex justify-between p-2 min-h-12">
+              <div className="flex gap-2 items-center">
+                <div className="leading-none px-2 py-1 rounded-md bg-primary-amber-text/10">
+                  <p className="text-xs tracking-tight text-neutral-500 font-semibold">
+                    CurrentUser: {user?.email}
+                  </p>
+                </div>
+              </div>
+              <Button text="dépanner" buttonStyle="blue">
+                <FireExtinguisher size={18} />
+              </Button>
+            </div>
+          </nav>
+          <Outlet />
         </div>
-      </aside>
-      <main className="flex flex-col flex-1">
-        <nav className="flex overflow-hidden justify-between p-2 min-h-12 bg-white">
-          <PrimaryButton text="heart" buttonStyle="pink">
-            <Heart size={16} />
-          </PrimaryButton>
-          <NavLink to="/home">
-            <PrimaryButton text="energy" buttonStyle="amber">
-              <Sun size={16} />
-            </PrimaryButton>
-          </NavLink>
-          <PrimaryButton text="fire" buttonStyle="red">
-            <Flame size={16} />
-          </PrimaryButton>
-          <PrimaryButton text="Nouvelle session" buttonStyle="blue">
-            <Plus size={16} />
-          </PrimaryButton>
-        </nav>
-        <Outlet />
       </main>
     </div>
   );

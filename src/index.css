@@ -1,16 +1,35 @@
 @import "tailwindcss";
 
-*{
-    font-family: "inter", sans-serif;
+* {
+  font-family: "inter", sans-serif;
 }
 
-@theme{
-    --color-primary-blue: #00C3FF;
-    --color-primary-blue-text: #002A73;
-    --color-primary-amber: #FFCD19;
-    --color-primary-amber-text: #694B00;
-    --color-primary-pink: #FF76CB;
-    --color-primary-pink-text: #690044;
-    --color-primary-red: #FF363A;
-    --color-primary-red-text: #FFD6D7;
+@theme {
+  --color-primary-blue: #59d7fe;
+  --color-primary-blue-text: #002a73;
+  --color-primary-amber: #ffcd19;
+  --color-primary-amber-text: #694b00;
+  /* --color-primary-pink: #ff76cb; */
+  --color-primary-pink: #ffa8de;
+  --color-primary-pink-text: #690044;
+  --color-primary-red: #ff363a;
+  --color-primary-red-text: #ffd6d7;
+}
+
+@layer base {
+    .button {
+      @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-3 ring-1 ring-offset-5 ring-transparent transition-all duration-150 hover:ring-offset-2 active:ring-2 active:ring-offset-0 ease-out cursor-pointer disabled:cursor-none;
+      color: #ffa8de;
+    }
+  .button-text {
+    @apply group-active:scale-[0.97] group-hover:scale-[1.03] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize tracking-tight leading-0;
+  }
+
+  .nav-button {
+    @apply rounded-lg relative overflow-hidden  inline-flex justify-start min-w-10 whitespace-nowrap items-center h-10 px-2 transition-all duration-150 ease-out cursor-pointer disabled:cursor-none;
+  }
+
+  .nav-button-text {
+    @apply group-active:scale-[0.97] group-hover:scale-[1.03] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-2 font-semibold capitalize tracking-normal leading-0;
+  }
 }
