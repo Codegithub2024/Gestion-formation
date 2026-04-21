@@ -17,16 +17,16 @@
 }
 
 @layer base {
-    .button {
-      @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-3 ring-1 ring-offset-5 ring-transparent transition-all duration-150 hover:ring-offset-2 active:ring-2 active:ring-offset-0 ease-out cursor-pointer disabled:cursor-none;
-      color: #ffa8de;
-    }
+  .button {
+    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-3 ring-1 ring-offset-0 ring-transparent transition-all duration-150 hover:ring-offset-2 active:ring-2 active:ring-offset-0 ease-out cursor-pointer disabled:cursor-none;
+    color: #ffa8de;
+  }
   .button-text {
     @apply group-active:scale-[0.97] group-hover:scale-[1.03] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize tracking-tight leading-0;
   }
 
   .nav-button {
-    @apply rounded-lg relative overflow-hidden  inline-flex justify-start min-w-10 whitespace-nowrap items-center h-10 px-2 transition-all duration-150 ease-out cursor-pointer disabled:cursor-none;
+    @apply rounded-lg relative overflow-hidden flex-1 inline-flex justify-start whitespace-nowrap items-center min-h-9 px-2 transition-all duration-150 ease-out cursor-pointer;
   }
 
   .nav-button-text {

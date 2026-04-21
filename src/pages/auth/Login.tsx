@@ -2,10 +2,10 @@ import { useState } from "react";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import { useAuthStore } from "../../store/auth.store";
-import type { User } from "../../types/user.types";
 import { useNavigate } from "react-router-dom";
 import { login, type LoginStatus } from "../../api/auth.api";
 import { getRedirectPath } from "../../utils/auth.utils";
+import FormError from "../../components/FormError";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -28,13 +28,14 @@ export default function Login() {
       if (!res.success || !res.data) {
         setLoading(false);
         setError(res.errorMessage ?? "Erreur de connexion");
-        return; // ← return propre plutôt que throw
+        return;
       }
 
-      setUser(res.data); // ← res.data est déjà un User complet
+      setUser(res.data);
 
-      navigate(getRedirectPath(res.data.role)); // ← redirection par rôle
+      navigate(getRedirectPath(res.data.role));
     } finally {
+        setError("Une erreur s'est produite !");
       setLoading(false);
     }
   };
@@ -42,7 +43,7 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col p-4 gap-6 h-fit mt-24 py-10 w-full mx-auto max-w-90"
+      className="flex flex-col border p-6 gap-6 h-fit border-neutral-200 w-full mx-auto max-w-90"
     >
       <h2 className="leading-relaxed font-bold text-3xl text-neutral-800">
         Connection
@@ -62,11 +63,7 @@ export default function Login() {
           placeholder="Mot de passe"
           required
         />
-        {error && (
-          <p className="text-red-500 font-medium leading-none text-sm">
-            {error}
-          </p>
-        )}
+        {error && <FormError message={error} />}
       </div>
       <Button
         type="submit"

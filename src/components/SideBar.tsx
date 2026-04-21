@@ -9,128 +9,137 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { useEffect, useRef, useState, type RefObject } from "react";
-import { NavLink } from "react-router-dom";
-import Button from "./Button";
 import NavButton from "./NavButton";
 
-interface ComponentNameProps {
-  contentRef: RefObject<null>;
+// Largeurs en JS — une seule source de vérité, plus de classes Tailwind sur width
+const SIDEBAR_OPEN = 290;
+const SIDEBAR_CLOSE = 52;
+
+interface SideBarProps {
+  contentRef: RefObject<HTMLElement | null>;
 }
 
-export default function SideBar({ contentRef }: ComponentNameProps) {
+export default function SideBar({ contentRef }: SideBarProps) {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
-    const saved = localStorage.getItem("isOpen");
-    return saved !== null ? JSON.parse(saved) : "false";
+    const saved = localStorage.getItem("sidebarOpen");
+    // ton bug : JSON.parse("false") retourne false (ok) mais tu comparais à la string "false"
+    return saved !== null ? JSON.parse(saved) : true;
   });
 
-  const asideRef = useRef(null);
+  const asideRef = useRef<HTMLElement>(null);
+  const closeIconRef = useRef<SVGSVGElement>(null);
+  const openIconRef = useRef<SVGSVGElement>(null);
+
+  // Timeline principale de la sidebar — créée une fois, pilotée ensuite
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+
+  // Persist
   useEffect(() => {
-    localStorage.setItem("isOpen", JSON.stringify(isOpen));
+    localStorage.setItem("sidebarOpen", JSON.stringify(isOpen));
   }, [isOpen]);
 
-  console.log(isOpen);
+  // ── Création des timelines (montage uniquement) ──────────────────────────
+  useGSAP(() => {
+    // État initial immédiat, sans animation (correspond à isOpen initial)
+    gsap.set(asideRef.current, {
+      width: isOpen ? SIDEBAR_OPEN : SIDEBAR_CLOSE,
+    });
+    // Les deux icônes sont rendues dans le DOM en permanence (voir JSX)
+    gsap.set(closeIconRef.current, {
+      scale: isOpen ? 1 : 0,
+      autoAlpha: isOpen ? 1 : 0,
+    });
+    gsap.set(openIconRef.current, {
+      scale: isOpen ? 0 : 1,
+      autoAlpha: isOpen ? 0 : 1,
+    });
 
-  const toggleAnimation = (open: string, close: string) => {
-    const tl = gsap.timeline();
-    tl.fromTo(
-      close,
-      {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-      {
-        scale: 0,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-    ).fromTo(
-      open,
-      {
-        scale: 0,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-      {
-        scale: 1,
-        duration: 0.2,
-        ease: "power2.out",
-      },
-    );
-  };
+    // Timeline : état fermé → état ouvert
+    tlRef.current = gsap
+      .timeline({ paused: true })
+      .fromTo(
+        asideRef.current,
+        {
+          width: SIDEBAR_CLOSE,
+        },
+        {
+          width: SIDEBAR_OPEN,
+          duration: 0.35,
+          ease: "power2.inOut",
+        },
+        0,
+      )
+      .fromTo(
+        closeIconRef.current,
+        {
+          scale: 0,
+          autoAlpha: 0,
+        },
+        {
+          scale: 1,
+          autoAlpha: 1,
+          duration: 0.2,
+          ease: "power2.out",
+        },
+        0.15,
+      ) // décalage : l'icône apparaît quand la sidebar est presque ouverte
+      .fromTo(
+        openIconRef.current,
+        {
+          scale: 1,
+          autoAlpha: 1,
+        },
+        {
+          scale: 0,
+          autoAlpha: 0,
+          duration: 0.15,
+          ease: "power2.in",
+        },
+        0,
+      ); // l'icône "open" disparaît immédiatement
 
-  // 1. On garde en mémoire si c'est le montage initial
-  const isFirstRender = useRef(true);
-  // 2. On garde en mémoire la version précédente pour comparer
-  const prevOpen = useRef(isOpen);
+    // Si on démarre en état ouvert, on positionne la timeline à la fin
+    if (isOpen) {
+      tlRef.current.progress(1);
+    }
+  });
 
-  useGSAP(
-    () => {
-      // CONDITION 1 : Si c'est le tout premier affichage (ou retour de route), on ne fait RIEN.
-      // Le CSS Tailwind (w-75 ou w-0) s'occupe de placer l'élément correctement sans flash.
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        prevOpen.current = isOpen; // On synchronise
-        return;
-      }
-
-      // CONDITION 2 : On n'anime que si isOpen a changé
-      if (prevOpen.current !== isOpen) {
-        gsap.fromTo(
-          asideRef.current,
-          {
-            // On force le départ de l'ancienne valeur
-            width: isOpen ? "48px" : "290px",
-          },
-          {
-            width: isOpen ? "290px" : "48px",
-            duration: 0.4,
-            ease: "power2.out",
-          },
-        );
-
-        if (isOpen) toggleAnimation(".close", ".open");
-        else toggleAnimation(".open", ".close");
-        // On met à jour la valeur précédente pour le prochain rendu
-        prevOpen.current = isOpen;
-      }
-    },
-    {
-      dependencies: [isOpen],
-      scope: contentRef,
-      revertOnUpdate: true,
-    },
-  );
+  // ── Pilotage de la timeline existante ────────────────────────────────────
+  useEffect(() => {
+    if (!tlRef.current) return;
+    if (isOpen) tlRef.current.play();
+    else tlRef.current.reverse();
+  }, [isOpen]);
 
   return (
     <aside
       ref={asideRef}
-      className={`flex flex-col ${isOpen ? "w-72.5" : "w-12"} overflow-hidden sticky top-0 left-0 h-screen`}
+      className="flex z-1000 flex-col sticky top-0 left-0 h-screen"
+      // Pas de classe w-* : GSAP est seul maître de la largeur
     >
-      <div className={`flex justify-end py-4 px-1.5 `}>
+      <div className="flex justify-end py-4 px-2">
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="hover:bg-black/10 flex justify-center items-center rounded-md h-8 p-2 cursor-pointer"
+          onClick={() => setIsOpen((prev) => !prev)}
+          className="hover:bg-black/10 flex justify-center items-center rounded-lg size-9 cursor-pointer"
         >
-          {isOpen ? (
-            <PanelLeftClose className="close" size={18} />
-          ) : (
-            <PanelLeftOpen className="open" size={18} />
-          )}
+          {/* Les deux icônes sont TOUJOURS dans le DOM — GSAP gère leur visibilité */}
+          <PanelLeftClose ref={closeIconRef} size={18} className="absolute" />
+          <PanelLeftOpen ref={openIconRef} size={18} className="absolute" />
         </button>
       </div>
+
       <nav className="flex flex-col p-2">
-        <NavButton to="/admin/dashboard" text="Dashboard">
-          <Database size={18} />
+        <NavButton isNavbarOpen={isOpen} to="/admin/dashboard" text="Dashboard">
+          <Database size={20} />
         </NavButton>
-        <NavButton to="/login" text="Login">
-          <ConciergeBellIcon size={18} />
+        <NavButton isNavbarOpen={isOpen} to="/login" text="Login">
+          <ConciergeBellIcon size={20} />
         </NavButton>
-        <NavButton to="/register" text="Register">
-          <LucideArrowDownToDot size={18} />
+        <NavButton isNavbarOpen={isOpen} to="/register" text="Register">
+          <LucideArrowDownToDot size={20} />
         </NavButton>
-        <NavButton to="/admin/utilisateurs" text="Utilisateurs">
-          <ChartPie size={18} />
+        <NavButton isNavbarOpen={isOpen} to="/admin/utilisateurs" text="Utilisateurs">
+          <ChartPie size={20} />
         </NavButton>
       </nav>
     </aside>
