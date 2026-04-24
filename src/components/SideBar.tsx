@@ -7,19 +7,17 @@ import {
   LucideArrowDownToDot,
   PanelLeftClose,
   PanelLeftOpen,
+  User,
 } from "lucide-react";
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import NavButton from "./NavButton";
+import NavGroup from "./NavGroup";
 
 // Largeurs en JS — une seule source de vérité, plus de classes Tailwind sur width
 const SIDEBAR_OPEN = 290;
 const SIDEBAR_CLOSE = 52;
 
-interface SideBarProps {
-  contentRef: RefObject<HTMLElement | null>;
-}
-
-export default function SideBar({ contentRef }: SideBarProps) {
+export default function SideBar() {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
     const saved = localStorage.getItem("sidebarOpen");
     // ton bug : JSON.parse("false") retourne false (ok) mais tu comparais à la string "false"
@@ -117,7 +115,7 @@ export default function SideBar({ contentRef }: SideBarProps) {
       className="flex z-1000 flex-col sticky top-0 left-0 h-screen"
       // Pas de classe w-* : GSAP est seul maître de la largeur
     >
-      <div className="flex justify-end py-4 px-2">
+      <div className="flex justify-end py-2 p-2">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
           className="hover:bg-black/10 flex justify-center items-center rounded-lg size-9 cursor-pointer"
@@ -128,16 +126,28 @@ export default function SideBar({ contentRef }: SideBarProps) {
         </button>
       </div>
 
-      <nav className="flex flex-col p-2">
-        <NavButton isNavbarOpen={isOpen} to="/admin/dashboard" text="Dashboard">
-          <Database size={20} />
-        </NavButton>
-        <NavButton isNavbarOpen={isOpen} to="/login" text="Login">
-          <ConciergeBellIcon size={20} />
-        </NavButton>
-        <NavButton isNavbarOpen={isOpen} to="/register" text="Register">
-          <LucideArrowDownToDot size={20} />
-        </NavButton>
+      <nav className="flex flex-col px-2">
+        <NavGroup isNavbarOpen={isOpen} groupName="Principal">
+          <NavButton isNavbarOpen={isOpen} to="/admin/dashboard" text="tableau de bord">
+            <Database size={20} />
+          </NavButton>
+        </NavGroup>
+        <NavGroup isNavbarOpen={isOpen} groupName="Utilisateurs">
+          <NavButton isNavbarOpen={isOpen} to="/admin/user/comptes" text="Tous les comptes">
+            <User size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/user/rights" text="Rôles et droits">
+            <LucideArrowDownToDot size={20} />
+          </NavButton>
+        </NavGroup>
+        <NavGroup isNavbarOpen={isOpen} groupName="Nav">
+          <NavButton isNavbarOpen={isOpen} to="/login" text="Login">
+            <User size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/user/rights" text="Rôles et droits">
+            <LucideArrowDownToDot size={20} />
+          </NavButton>
+        </NavGroup>
         <NavButton isNavbarOpen={isOpen} to="/admin/utilisateurs" text="Utilisateurs">
           <ChartPie size={20} />
         </NavButton>

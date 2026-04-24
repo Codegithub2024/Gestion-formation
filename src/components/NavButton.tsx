@@ -36,13 +36,13 @@ export default function NavButton({ to, text, children, isNavbarOpen = true }: N
 
   useGSAP(() => {
     gsap.set(spanRef, {
-      x: isNavbarOpen ? 0 : 20,
+      x: isNavbarOpen ? 0 : 16,
       autoAlpha: isNavbarOpen ? 1 : 0,
     });
     tlRef.current = gsap.timeline().fromTo(
       spanRef.current,
       {
-        x: 20,
+        x: 16,
         autoAlpha: 0,
       },
       {
@@ -73,7 +73,7 @@ export default function NavButton({ to, text, children, isNavbarOpen = true }: N
         className={({ isActive }) =>
           `nav-button ring-1 ${
             isActive
-              ? "bg-white text-neutral-800 ring-neutral-200"
+              ? "bg-blue-500 text-white ring-transparent"
               : "hover:bg-black/5 text-neutral-500 ring-transparent group"
           }`
         }

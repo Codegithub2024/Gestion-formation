@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  font-family: "inter", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 @theme {
@@ -18,11 +18,11 @@
 
 @layer base {
   .button {
-    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-3 ring-1 ring-offset-0 ring-transparent transition-all duration-150 hover:ring-offset-2 active:ring-2 active:ring-offset-0 ease-out cursor-pointer disabled:cursor-none;
-    color: #ffa8de;
+    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-3 cursor-pointer disabled:cursor-none hover:brightness-95;
   }
+
   .button-text {
-    @apply group-active:scale-[0.97] group-hover:scale-[1.03] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize tracking-tight leading-0;
+    @apply text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize tracking-tight leading-0;
   }
 
   .nav-button {
@@ -30,6 +30,6 @@
   }
 
   .nav-button-text {
-    @apply group-active:scale-[0.97] group-hover:scale-[1.03] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-2 font-semibold capitalize tracking-normal leading-0;
+    @apply group-active:scale-[0.97] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-2 font-semibold capitalize tracking-normal leading-0;
   }
 }

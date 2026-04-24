@@ -1,4 +1,4 @@
-import type { User } from "../types/user.types";
+import type { User } from "../types/auth.types";
 
 export type LoginStatus = {
   success: boolean;
