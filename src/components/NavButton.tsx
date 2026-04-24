@@ -73,7 +73,7 @@ export default function NavButton({ to, text, children, isNavbarOpen = true }: N
         className={({ isActive }) =>
           `nav-button ring-1 ${
             isActive
-              ? "bg-blue-500 text-white ring-transparent"
+              ? "bg-white text-neutral-800 ring-transparent"
               : "hover:bg-black/5 text-neutral-500 ring-transparent group"
           }`
         }

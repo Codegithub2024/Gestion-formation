@@ -20,6 +20,7 @@ export default function Button({
   children,
   placeAfter,
   buttonStyle = "blue",
+  className: classname,
   onClick,
 }: ButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -28,7 +29,7 @@ export default function Button({
 
   // Styles Tailwind par variante
   const styleMap: Record<ButtonStyle, string> = {
-    blue: "bg-primary-blue text-primary-blue-text hover:ring-primary-blue-text/50 active:ring-primary-blue-text",
+    blue: "bg-blue-500 text-white hover:ring-primary-blue-text/50 active:ring-primary-blue-text",
     amber:
       "bg-primary-amber text-primary-amber-text hover:ring-primary-amber-text/50 active:ring-primary-amber-text",
     pink: "bg-primary-pink text-primary-pink-text hover:ring-primary-pink-text/50 active:ring-primary-pink-text",
@@ -40,7 +41,7 @@ export default function Button({
       ref={buttonRef}
       onClick={onClick}
       disabled={state}
-      className={`group button ${styleMap[buttonStyle]}`}
+      className={`group button ${styleMap[buttonStyle]} ${classname || ""}`}
     >
       {state ? (
         <div className="flex items-center justify-center gap-1.5">

@@ -43,12 +43,17 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col border p-6 gap-6 h-fit border-neutral-200 w-full mx-auto max-w-90"
+      className="flex flex-col w-full mx-auto bg-white rounded-xl h-fit max-w-100"
     >
-      <h2 className="leading-relaxed font-bold text-3xl text-neutral-800">
-        Connection
-      </h2>
-      <div className="flex flex-col gap-3 flex-1">
+      <div className="flex flex-col items-center p-10 pb-0">
+        <h2 className="text-xl font-bold leading-9 capitalize text-neutral-800">
+          formulaire de connection
+        </h2>
+        <span className="text-sm text-neutral-500">
+          Veillez vous identifier{" "}
+        </span>
+      </div>
+      <div className="flex flex-col flex-1 gap-3 p-10">
         <Input
           type="email"
           htmlFor="email"
@@ -64,14 +69,17 @@ export default function Login() {
           required
         />
         {error && <FormError message={error} />}
+        <div className="flex items-center py-3 pb-0">
+          <Button
+            type="submit"
+            text="Envoyer"
+            buttonStyle="blue"
+            className="flex-1 h-10"
+            state={loading}
+            onClick={() => handleSubmit}
+          />
+        </div>
       </div>
-      <Button
-        type="submit"
-        text="Envoyer"
-        buttonStyle="amber"
-        state={loading}
-        onClick={() => handleSubmit}
-      />
     </form>
   );
 }

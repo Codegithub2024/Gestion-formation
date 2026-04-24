@@ -47,12 +47,15 @@ export default function AdminLayout() {
   }, [open]);
 
   return (
-    <div ref={contentRef} className="flex bg-neutral-100">
+    <div ref={contentRef} className="flex bg-neutral-200">
       <SideBar />
 
-      <main className="p-2 pl-0 flex flex-col flex-1">
-        <div className="rounded-lg flex flex-col flex-1 border border-neutral-200 overflow-hidden">
-          <nav ref={navRef} className="border-b border-b-neutral-200 px-4">
+      <main className="p-2 pl-0 flex flex-col flex-1 h-screen">
+        <div className="rounded-lg flex flex-col bg-neutral-100 flex-1 overflow-y-scroll">
+          <nav
+            ref={navRef}
+            className="border-b border-b-neutral-200 sticky z-100 bg-neutral-100/70 backdrop-blur-md top-0 right-0 px-4"
+          >
             <div className="container mx-auto flex justify-between min-h-12 items-center">
               <div className="flex gap-2 items-center">
                 <div className="flex items-center">
