@@ -1,9 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { FireExtinguisher, Plus, Send, User2 } from "lucide-react";
-import Button from "../components/Button";
-import { useAuthStore } from "../store/auth.store";
-import SideBar from "../components/SideBar";
+import Button from "../ui/Button";
+import { useAuthStore } from "../../store/auth.store";
+import SideBar from "../ui/SideBar";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 

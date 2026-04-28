@@ -1,9 +1,20 @@
 import type { User } from "../types/auth.types";
+import type { Role } from "../types/enums.types";
+
+// api/auth.api.ts
+export type LoginResponse = {
+  accessToken: string;
+  refreshToken: string;
+  role: Role;
+  email: string;
+  nom: string;
+  prenom: string;
+};
 
 export type LoginStatus = {
   success: boolean;
   errorMessage?: string | null;
-  data: User | null;
+  data: LoginResponse | null;
 };
 
 export const login = async (
@@ -18,24 +29,18 @@ export const login = async (
     });
 
     if (!res.ok) {
-      // Tente de lire le message d'erreur renvoyé par le serveur
       const errorBody = await res.json().catch(() => null);
-      const errorMessage =
-        errorBody?.message ??
-        errorBody?.error ??
-        "Nom d'utilisateur ou mot de passe incorrect";
-
-      return { success: false, errorMessage, data: null };
+      return {
+        success: false,
+        errorMessage: errorBody?.error ?? "Email ou mot de passe incorrect",
+        data: null,
+      };
     }
-
-    const data = (await res.json()) as User;
-    return { success: true, data };
+    return { success: true, data: await res.json() };
   } catch {
-    // Pas de réseau, serveur down, etc.
     return {
       success: false,
-      errorMessage:
-        "Impossible de joindre le serveur. Vérifiez votre connexion.",
+      errorMessage: "Impossible de joindre le serveur",
       data: null,
     };
   }

@@ -1,11 +1,9 @@
 import { Routes, Route, BrowserRouter, NavLink } from "react-router-dom";
-import AdminLayout from "./layout/AdminLayout";
-import AuthLayout from "./layout/AuthLayout";
+import AuthLayout from "./components/layout/AuthLayout";
 import Login from "./pages/auth/Login";
-import Dashboard from "./pages/admin/Dashboard";
-import UserList from "./pages/admin/user/UserList";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Button from "./components/Button";
+import Button from "./components/ui/Button";
+import AdminRoutes from "./routes/AdminRoutes";
 
 const queryClient = new QueryClient();
 
@@ -14,10 +12,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route element={<AdminLayout />}>
-            <Route path="/admin/dashboard" element={<Dashboard />} />
-            <Route path="/admin/utilisateurs" element={<UserList />} />
-          </Route>
+          <Route path="/admin/*" element={<AdminRoutes />} />
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
           </Route>

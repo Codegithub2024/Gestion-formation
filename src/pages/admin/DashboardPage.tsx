@@ -9,10 +9,12 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(useGSAP);
 
-export default function Dashboard() {
+export default function DashboardPage() {
   const user = useAuthStore((set) => set.user);
   const queryClient = useQueryClient();
   const dashboardRef = useRef<HTMLDivElement>(null);
+
+  console.log(user);
 
   // Lecture
   const { data: dashboardStats } = useQuery({
@@ -31,7 +33,7 @@ export default function Dashboard() {
         autoAlpha: 1,
         y: 0,
         duration: 0.75,
-        ease: "power2.out",
+        ease: "expo.out",
         stagger: 0.085,
         delay: 0.1,
         overwrite: true,
@@ -44,13 +46,12 @@ export default function Dashboard() {
     // if (dashboardStats) {
     //   queryClient.setQueryData(["dashboardStats"], dashboardStats);
     // }
-    if (!dashboardRef) return;
+    if (!dashboardRef || !dashboardStats) return;
     else animRef.current?.play();
   }, [dashboardStats]);
 
-
   return (
-    <div ref={dashboardRef} className="flex flex-1 min-h-screen px-4">
+    <div ref={dashboardRef} className="flex flex-1 min-h-screen px-4 w-full">
       <div className="container flex flex-col flex-1 gap-4 pt-6 mx-auto">
         <div className="flex w-full wrap-anywhere">
           <h1 className="text-xl font-semibold tracking-tight lg:text-3xl text-neutral-800 leading-12">

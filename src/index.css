@@ -18,7 +18,7 @@
 
 @layer base {
   .button {
-    @apply rounded-full relative overflow-hidden inline-flex justify-center items-center h-8 px-4 cursor-pointer disabled:cursor-none hover:brightness-95;
+    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-4 cursor-pointer disabled:cursor-none hover:brightness-95;
   }
 
   .button-text {

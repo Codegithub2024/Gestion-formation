@@ -1,15 +1,15 @@
 import { useState } from "react";
-import Input from "../../components/Input";
-import Button from "../../components/Button";
+import Input from "../../components/ui/Input";
+import Button from "../../components/ui/Button";
 import { useAuthStore } from "../../store/auth.store";
 import { useNavigate } from "react-router-dom";
 import { login, type LoginStatus } from "../../api/auth.api";
 import { getRedirectPath } from "../../utils/auth.utils";
-import FormError from "../../components/FormError";
+import FormError from "../../components/ui/FormError";
 
 export default function Login() {
   const navigate = useNavigate();
-  const setUser = useAuthStore((state) => state.setUser);
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -31,11 +31,21 @@ export default function Login() {
         return;
       }
 
-      setUser(res.data);
+      console.log(res.data);
+
+      setAuth(
+        {
+          nom: res.data.nom,
+          prenom: res.data.prenom,
+          email: res.data.email,
+          role: res.data.role,
+        },
+        res.data.accessToken,
+        res.data.refreshToken,
+      );
 
       navigate(getRedirectPath(res.data.role));
     } finally {
-        setError("Une erreur s'est produite !");
       setLoading(false);
     }
   };
@@ -43,9 +53,9 @@ export default function Login() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col w-full mx-auto bg-white rounded-xl h-fit max-w-100"
+      className="flex flex-col w-full mx-auto bg-white rounded-2xl h-fit max-w-90"
     >
-      <div className="flex flex-col items-center p-10 pb-0">
+      <div className="flex flex-col items-center pt-6 lg:pt-10">
         <h2 className="text-xl font-bold leading-9 capitalize text-neutral-800">
           formulaire de connection
         </h2>
@@ -53,7 +63,7 @@ export default function Login() {
           Veillez vous identifier{" "}
         </span>
       </div>
-      <div className="flex flex-col flex-1 gap-3 p-10">
+      <div className="flex flex-col flex-1 gap-3 p-6 lg:p-10">
         <Input
           type="email"
           htmlFor="email"

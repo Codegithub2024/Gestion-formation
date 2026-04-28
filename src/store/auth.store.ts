@@ -1,38 +1,42 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { User } from "../types/auth.types";
-import type { role } from "../types/role.types";
+import type { Role } from "../types/enums.types";
 
 type AuthState = {
   user: User | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
 };
 
 type AuthActions = {
-  setUser: (user: User) => void;
+  setAuth: (user: User, accessToken: string, refreshToken: string) => void;
+  setAccessToken: (token: string) => void;
   logout: () => void;
-  hasRole: (role: role | role[]) => boolean;
+  hasRole: (role: Role | Role[]) => boolean;
 };
-
-type AuthStore = AuthState & AuthActions;
 
 const initialState: AuthState = {
   user: null,
+  accessToken: null,
+  refreshToken: null,
   isAuthenticated: false,
 };
 
-export const useAuthStore = create<AuthStore>()(
+export const useAuthStore = create<AuthState & AuthActions>()(
   persist(
     (set, get) => ({
       ...initialState,
 
-      // Appelé après un login réussi
-      setUser: (user) => set({ user, isAuthenticated: true }),
+      setAuth: (user, accessToken, refreshToken) =>
+        set({ user, accessToken, refreshToken, isAuthenticated: true }),
 
-      // Réinitialise tout le state
+      // Appelé par le refresh — on ne touche pas au refreshToken ni au user
+      setAccessToken: (accessToken) => set({ accessToken }),
+
       logout: () => set(initialState),
 
-      // Vérifie si l'utilisateur a un rôle précis (ou l'un des rôles)
       hasRole: (role) => {
         const userRole = get().user?.role;
         if (!userRole) return false;
@@ -42,11 +46,12 @@ export const useAuthStore = create<AuthStore>()(
       },
     }),
     {
-      name: "auth", // clé dans localStorage
+      name: "auth",
       storage: createJSONStorage(() => localStorage),
-      // On ne persiste pas le mot de passe, même hasché
       partialize: (state) => ({
-        user: state.user ? { ...state.user, password: undefined } : null,
+        user: state.user,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken, // persisté pour survivre au refresh de page
         isAuthenticated: state.isAuthenticated,
       }),
     },
