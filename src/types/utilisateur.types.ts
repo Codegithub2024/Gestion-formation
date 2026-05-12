@@ -6,5 +6,4 @@ export type Utilisateur = BaseEntity & {
   prenom: string;
   email: string;
   role: Role;
-  // motDePasse jamais exposé côté frontend
 };

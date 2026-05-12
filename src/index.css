@@ -4,6 +4,22 @@
   font-family: "Poppins", sans-serif;
 }
 
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-neutral-500);
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
 @theme {
   --color-primary-blue: #59d7fe;
   --color-primary-blue-text: #002a73;
@@ -22,7 +38,7 @@
   }
 
   .button-text {
-    @apply text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize tracking-tight leading-0;
+    @apply text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-1.5 font-semibold capitalize leading-0;
   }
 
   .nav-button {
@@ -31,5 +47,9 @@
 
   .nav-button-text {
     @apply group-active:scale-[0.97] ease-out transition-all duration-150 text-sm inline-flex h-full justify-center *:stroke-3  items-center gap-2 font-semibold capitalize tracking-normal leading-0;
+  }
+
+  .input {
+    @apply ring-1 focus-within:ring-2 font-semibold ring-offset-0 min-w-6 focus-within:ring-primary-amber transition-all duration-200 ring-neutral-200 outline-none rounded-lg min-h-8 bg-white px-4 text-neutral-600 text-sm;
   }
 }

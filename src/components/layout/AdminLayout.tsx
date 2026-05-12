@@ -1,11 +1,14 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { useEffect, useRef, useState, type RefObject } from "react";
-import { FireExtinguisher, Plus, Send, User2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { User2 } from "lucide-react";
 import Button from "../ui/Button";
 import { useAuthStore } from "../../store/auth.store";
 import SideBar from "../ui/SideBar";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Container from "../ui/Container";
+import Dialog from "../ui/Dialog";
+import { Breadcrumbs } from "../ui/Breadcrumbs";
 
 gsap.registerPlugin(useGSAP);
 
@@ -47,25 +50,18 @@ export default function AdminLayout() {
   }, [open]);
 
   return (
-    <div ref={contentRef} className="flex bg-neutral-200">
+    <div ref={contentRef} className="flex bg-neutral-200 relative">
       <SideBar />
 
-      <main className="p-2 pl-0 flex flex-col flex-1 h-screen">
-        <div className="rounded-lg flex flex-col bg-neutral-100 flex-1 overflow-y-scroll">
+      <main className="p-2 pl-0 flex flex-col flex-1 h-screen bg-neutral-200 overflow-hidden">
+        <div className="rounded-lg flex relative flex-col min-h-full overflow-clip overflow-y-scroll bg-neutral-100 flex-1">
           <nav
             ref={navRef}
-            className="border-b border-b-neutral-200 sticky z-100 bg-neutral-100/70 backdrop-blur-md top-0 right-0 px-4"
+            className="border-b border-b-neutral-200 sticky z-10 bg-neutral-100/70 backdrop-blur-md top-0 right-0 px-4"
           >
             <div className="container mx-auto flex justify-between min-h-12 items-center">
               <div className="flex gap-2 items-center">
-                <div className="flex items-center">
-                  <p className="text-xs tracking-tight leading-none font-semibold flex items-center gap-1">
-                    /
-                    <span className="text-neutral-600 px-2 py-0.5 rounded-md bg-primary-amber-text/10">
-                      Dashboard
-                    </span>
-                  </p>
-                </div>
+                <Breadcrumbs />
               </div>
 
               <div className="relative">
@@ -90,7 +86,6 @@ export default function AdminLayout() {
                         <p className="font-bold text-sm tracking-tight text-neutral-700 leading-none">
                           {user?.role}
                         </p>
-                        {/*<p className="font-medium text-neutral-700 text-xs leading-none">{user?.email}</p>*/}
                         <div className="leading-none px-2 py-0.5 rounded-md bg-primary-amber-text/10">
                           <p className="text-xs tracking-tight text-neutral-600 font-semibold">
                             {user?.email}
@@ -113,7 +108,10 @@ export default function AdminLayout() {
               </div>
             </div>
           </nav>
-          <Outlet />
+          <Container>
+            <Outlet />
+          </Container>
+          <Dialog />
         </div>
       </main>
     </div>

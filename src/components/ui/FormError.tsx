@@ -32,7 +32,7 @@ export default function FormError({ message }: FormErrorType) {
   return (
     <p
       ref={error}
-      className="text-red-500 font-medium w-fit leading-none px-2 py-0.5 rounded-md text-sm"
+      className="text-red-500 font-medium w-fit leading-none py-0.5 rounded-md text-sm"
     >
       {message}
     </p>

@@ -1,5 +1,6 @@
 // services/audit.service.ts
-import type { SecurityLog, TypeEvenement } from "../../types/audit.types";
+import type { SecurityLog } from "../../types/audit.types";
+import type { TypeEvenementSecurite } from "../../types/enums.types";
 import { apiFetch } from "../base.api";
 
 export const auditService = {
@@ -7,7 +8,7 @@ export const auditService = {
   getLogs: () => apiFetch<SecurityLog[]>("/api/admin/audit/security"),
 
   // Logs filtrés par type
-  getLogsByType: (type: TypeEvenement) =>
+  getLogsByType: (type: TypeEvenementSecurite) =>
     apiFetch<SecurityLog[]>(`/api/admin/audit/security/${type}`),
 
   // Historique Envers d'une entité

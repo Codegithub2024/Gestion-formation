@@ -1,5 +1,6 @@
 import type { BaseEntity } from "./base.types";
 import type { Domaine } from "./domaine.types";
+import type { TypeDocument } from "./enums.types";
 
 export type Cours = BaseEntity & {
   titre: string;
@@ -15,17 +16,6 @@ export type Document = BaseEntity & {
   titre: string;
   reference: string;
   cheminFichier: string | null;
-  type: import("./enums.types").TypeDocument;
+  type: TypeDocument;
   cours: Cours;
 };
-
-// Pour la création — on envoie des IDs, pas des objets imbriqués
-export type CreateCoursDTO = {
-  titre: string;
-  description?: string;
-  dureeHeures: number;
-  domaineId: number;
-  prerequisIds?: number[];
-};
-
-export type UpdateCoursDTO = Partial<CreateCoursDTO>;

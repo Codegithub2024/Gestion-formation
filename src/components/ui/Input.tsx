@@ -1,23 +1,53 @@
 import type { InputHTMLAttributes } from "react";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  htmlFor: string;
-  label: string;
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {}
+interface TextareaProps extends InputHTMLAttributes<HTMLTextAreaElement> {}
+
+export default function Input({ ...props }: InputProps) {
+  return (
+    <div className="grid gap-1 flex-1">
+      <label
+        htmlFor={props.name}
+        className="text-xs capitalize font-semibold text-neutral-500"
+      >
+        {props.name}
+      </label>
+      <input {...props} id={props.name} className="input" />
+    </div>
+  );
 }
 
-export default function Input({ htmlFor, label, ...props }: InputProps) {
+export function Select({ ...props }: SelectProps) {
   return (
-    <div className="flex flex-col gap-1">
-      {/* <label
-        htmlFor={htmlFor}
-        className="text-sm capitalize font-semibold leading-none text-neutral-500"
+    <div className="grid gap-1 flex-1">
+      <label
+        htmlFor={props.name}
+        className="text-xs capitalize font-semibold text-neutral-500"
       >
-        {label}
-      </label> */}
-      <input
+        {props.name}
+      </label>
+      <select {...props} id={props.name} className="input">
+        {props.children}
+      </select>
+    </div>
+  );
+}
+
+export function Textarea({ ...props }: TextareaProps) {
+  return (
+    <div className="grid gap-1 flex-1">
+      <label
+        htmlFor={props.name}
+        className="text-xs capitalize font-semibold text-neutral-500"
+      >
+        {props.name}
+      </label>
+      <textarea
         {...props}
-        id={htmlFor}
-        className="ring-1 font-semibold ring-offset-0 focus-within:ring-offset-1 focus-within:ring-neutral-400 transition-all duration-150 ring-transparent outline-none border border-black/10 rounded-lg h-10 bg-white px-4 text-neutral-600 text-sm"
+        id={props.name}
+        className="input py-2 resize-none"
+        rows={5}
       />
     </div>
   );

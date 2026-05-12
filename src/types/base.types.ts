@@ -3,6 +3,4 @@ export type BaseEntity = {
   id: number;
   dateCreation: string; // LocalDateTime sérialisé en string ISO par Jackson
   dateModification: string;
-  creePar: string | null;
-  modifiePar: string | null;
 };

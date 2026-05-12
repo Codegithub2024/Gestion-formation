@@ -1,20 +1,27 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
+  BookOpen,
+  CalendarDays,
   ChartPie,
   ConciergeBellIcon,
   Database,
+  GraduationCap,
   LucideArrowDownToDot,
   PanelLeftClose,
   PanelLeftOpen,
+  ShieldAlert,
+  Tag,
   User,
+  Users,
+  UsersRound,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import NavButton from "./NavButton";
 import NavGroup from "./NavGroup";
 
 // Largeurs en JS — une seule source de vérité, plus de classes Tailwind sur width
-const SIDEBAR_OPEN = 290;
+const SIDEBAR_OPEN = 280;
 const SIDEBAR_CLOSE = 52;
 
 export default function SideBar() {
@@ -112,7 +119,7 @@ export default function SideBar() {
   return (
     <aside
       ref={asideRef}
-      className="flex z-1000 flex-col sticky top-0 left-0 h-screen"
+      className="flex z-1000 flex-col sticky top-0 bg-neutral-200 left-0 h-screen"
       // Pas de classe w-* : GSAP est seul maître de la largeur
     >
       <div className="flex justify-end py-2 p-2">
@@ -128,29 +135,46 @@ export default function SideBar() {
 
       <nav className="flex flex-col px-2">
         <NavGroup isNavbarOpen={isOpen} groupName="Principal">
-          <NavButton isNavbarOpen={isOpen} to="/admin/dashboard" text="tableau de bord">
+          <NavButton
+            isNavbarOpen={isOpen}
+            to="/admin/dashboard"
+            text="tableau de bord"
+          >
             <Database size={20} />
           </NavButton>
         </NavGroup>
-        <NavGroup isNavbarOpen={isOpen} groupName="Utilisateurs">
-          <NavButton isNavbarOpen={isOpen} to="/admin/user/comptes" text="Tous les comptes">
-            <User size={20} />
+
+        <NavGroup isNavbarOpen={isOpen} groupName="Gestion">
+          <NavButton
+            isNavbarOpen={isOpen}
+            to="/admin/utilisateurs"
+            text="Utilisateurs"
+          >
+            <Users size={20} />
           </NavButton>
-          <NavButton isNavbarOpen={isOpen} to="/admin/user/rights" text="Rôles et droits">
-            <LucideArrowDownToDot size={20} />
+          <NavButton
+            isNavbarOpen={isOpen}
+            to="/admin/formateurs"
+            text="Formateurs"
+          >
+            <GraduationCap size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/cours" text="Cours">
+            <BookOpen size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/domaines" text="Domaines">
+            <Tag size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/sessions" text="Sessions">
+            <CalendarDays size={20} />
           </NavButton>
         </NavGroup>
-        <NavGroup isNavbarOpen={isOpen} groupName="Nav">
-          <NavButton isNavbarOpen={isOpen} to="/login" text="Login">
-            <User size={20} />
-          </NavButton>
-          <NavButton isNavbarOpen={isOpen} to="/admin/user/rights" text="Rôles et droits">
-            <LucideArrowDownToDot size={20} />
+
+        <NavGroup isNavbarOpen={isOpen} groupName="Sécurité">
+          <NavButton isNavbarOpen={isOpen} to="/admin/audit" text="Sécurité">
+            <ShieldAlert size={20} />
           </NavButton>
         </NavGroup>
-        <NavButton isNavbarOpen={isOpen} to="/admin/utilisateurs" text="Utilisateurs">
-          <ChartPie size={20} />
-        </NavButton>
       </nav>
     </aside>
   );

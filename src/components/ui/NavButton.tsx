@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 // import { createPortal } from "react-dom";

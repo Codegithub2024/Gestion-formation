@@ -1,8 +1,7 @@
-import type { role } from "../types/role.types";
+import type { Role } from "../types/enums.types";
 
-// Juste au-dessus du composant, ou dans un fichier utils/auth.utils.ts
-export const getRedirectPath = (role: role): string => {
-  const paths: Record<role, string> = {
+export const getRedirectPath = (role: Role): string => {
+  const paths: Record<Role, string> = {
     ADMIN: "/admin/dashboard",
     GESTIONNAIRE_FORMATION: "/gestionnaire/dashboard",
     FORMATEUR: "/formateur/dashboard",

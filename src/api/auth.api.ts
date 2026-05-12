@@ -1,5 +1,6 @@
-import type { User } from "../types/auth.types";
 import type { Role } from "../types/enums.types";
+import type { LoginRequest } from "../types/requests.types";
+import { ApiError } from "./base.api";
 
 // api/auth.api.ts
 export type LoginResponse = {
@@ -17,15 +18,12 @@ export type LoginStatus = {
   data: LoginResponse | null;
 };
 
-export const login = async (
-  email: string,
-  motDePasse: string,
-): Promise<LoginStatus> => {
+export const login = async (data: LoginRequest): Promise<LoginStatus> => {
   try {
     const res = await fetch("http://localhost:8086/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, motDePasse }),
+      body: JSON.stringify(data),
     });
 
     if (!res.ok) {
@@ -36,12 +34,18 @@ export const login = async (
         data: null,
       };
     }
-    return { success: true, data: await res.json() };
-  } catch {
+
+    return {
+      success: true,
+      data: await res.json(),
+    };
+  } catch (error) {
+    // On retourne proprement l'erreur sans crasher l'application
     return {
       success: false,
       errorMessage: "Impossible de joindre le serveur",
       data: null,
     };
   }
+  // FINALLY SUPPRIMÉ !
 };
