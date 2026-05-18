@@ -7,7 +7,7 @@ import type {
 import FormError from "../../ui/FormError";
 import Input, { Select, Textarea } from "../../ui/Input";
 import { useQuery } from "@tanstack/react-query";
-import { domaineService } from "../../../api/services/domaine.service";
+import { domaineService } from "../../../services/domaine.service";
 import Button from "../../ui/Button";
 
 type CoursFormProps = {
@@ -91,6 +91,7 @@ export default function CoursForm({
           value={formData.titre}
           onChange={handleChange}
           placeholder="Titre"
+          required
         />
         <Textarea
           name="description"
@@ -107,6 +108,7 @@ export default function CoursForm({
               setFormData({ ...formData, dureeHeures: Number(e.target.value) })
             }
             placeholder="Duree en heures"
+            required
           />
           <Select
             name="domaine"
@@ -114,6 +116,7 @@ export default function CoursForm({
             onChange={(e) =>
               setFormData({ ...formData, domaineId: Number(e.target.value) })
             }
+            required
           >
             <option>-- Domaine --</option>
             {domaines?.map((domaine) => (

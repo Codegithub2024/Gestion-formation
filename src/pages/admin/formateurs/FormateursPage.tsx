@@ -3,9 +3,9 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useDialogStore } from "../../../store/dialog.store";
-import { formateurService } from "../../../api/services/formateur.service";
-import { coursService } from "../../../api/services/cours.service";
-import { utilisateurService } from "../../../api/services/utilisateur.service";
+import { formateurService } from "../../../services/formateur.service";
+import { coursService } from "../../../services/cours.service";
+import { utilisateurService } from "../../../services/utilisateur.service";
 import FormateurInterneTable from "../../../components/admin/formateurs/FormateurInterneTable";
 import FormateurExterneTable from "../../../components/admin/formateurs/FormateurExterneTable";
 import FormateurInterneForm from "../../../components/admin/formateurs/FormateurInterneForm";
@@ -304,7 +304,7 @@ export default function FormateursPage() {
 
   // ── Rendu ─────────────────────────────────────────────────────────────────
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6">
       {/* En-tête */}
       <div className="flex justify-between items-center">
         <div>

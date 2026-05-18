@@ -1,5 +1,5 @@
-import type { DashboardStats } from "../../types/dashboard.types";
-import { apiFetch } from "../base.api";
+import type { DashboardStats } from "../types/dashboard.types";
+import { apiFetch } from "../api/base.api";
 
 export const statsService = {
   getAllStats: () => apiFetch<DashboardStats>("/api/stats/tableau-de-bord"),

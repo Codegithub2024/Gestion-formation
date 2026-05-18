@@ -2,6 +2,8 @@
 import { useState } from "react";
 import type { FormateurExterne } from "../../../types/formateur.types";
 import type { CreateFormateurExterneRequest } from "../../../types/requests.types";
+import Input from "../../ui/Input";
+import Button from "../../ui/Button";
 
 type Props = {
   formateur: FormateurExterne | null;
@@ -55,40 +57,29 @@ export default function FormateurExterneForm({
   ];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2 p-10">
       {fields.map((field) => (
         <div key={field.name} className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-neutral-700">
-            {field.label}
-            {!field.required && (
-              <span className="text-neutral-400 font-normal ml-1">
-                (optionnel)
-              </span>
-            )}
-          </label>
-          <input
+          <Input
             name={field.name}
             value={form[field.name] ?? ""}
             onChange={handleChange}
             className="border border-neutral-200 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-neutral-900"
+            placeholder={field.label}
+            required={field.required}
           />
         </div>
       ))}
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      <div className="flex justify-end gap-2 mt-2">
-        <button
+      <div className="flex justify-end gap-2 mt-4">
+        <Button
           onClick={handleSubmit}
-          disabled={isLoading}
-          className="px-4 py-2 text-sm bg-neutral-900 text-white rounded-lg disabled:opacity-50"
-        >
-          {isLoading
-            ? "Enregistrement..."
-            : estEnEdition
-              ? "Modifier"
-              : "Créer"}
-        </button>
+          text={estEnEdition ? "Modifier" : "Créer"}
+          state={isLoading}
+          buttonStyle="amber"
+        />
       </div>
     </div>
   );

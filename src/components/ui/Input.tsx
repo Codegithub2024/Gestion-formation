@@ -6,12 +6,13 @@ interface TextareaProps extends InputHTMLAttributes<HTMLTextAreaElement> {}
 
 export default function Input({ ...props }: InputProps) {
   return (
-    <div className="grid gap-1 flex-1">
+    <div className="grid flex-1">
       <label
         htmlFor={props.name}
-        className="text-xs capitalize font-semibold text-neutral-500"
+        className="text-sm capitalize text-neutral-800"
       >
         {props.name}
+        {props.required ? <span className="text-red-500">*</span> : null}
       </label>
       <input {...props} id={props.name} className="input" />
     </div>
@@ -20,12 +21,13 @@ export default function Input({ ...props }: InputProps) {
 
 export function Select({ ...props }: SelectProps) {
   return (
-    <div className="grid gap-1 flex-1">
+    <div className="grid gap-2 flex-1">
       <label
         htmlFor={props.name}
-        className="text-xs capitalize font-semibold text-neutral-500"
+        className="text-sm capitalize text-neutral-500"
       >
         {props.name}
+        {props.required ? <span className="text-red-500">*</span> : null}
       </label>
       <select {...props} id={props.name} className="input">
         {props.children}
@@ -39,9 +41,10 @@ export function Textarea({ ...props }: TextareaProps) {
     <div className="grid gap-1 flex-1">
       <label
         htmlFor={props.name}
-        className="text-xs capitalize font-semibold text-neutral-500"
+        className="text-sm capitalize text-neutral-500"
       >
         {props.name}
+        {props.required ? <span className="text-red-500">*</span> : null}
       </label>
       <textarea
         {...props}

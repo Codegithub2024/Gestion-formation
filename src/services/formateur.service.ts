@@ -1,13 +1,13 @@
 // services/formateur.service.ts
-import { apiFetch } from "../base.api";
+import { apiFetch } from "../api/base.api";
 import type {
   FormateurInterne,
   FormateurExterne,
-} from "../../types/formateur.types";
+} from "../types/formateur.types";
 import type {
   CreateFormateurExterneRequest,
   UpdateFormateurExterneRequest,
-} from "../../types/requests.types";
+} from "../types/requests.types";
 
 export const formateurService = {
   // ── Internes ──────────────────────────────────────────────────────────────

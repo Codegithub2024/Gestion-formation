@@ -63,7 +63,10 @@ export default function UtilisateurForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full p-10">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col rounded-2xl gap-4 w-full p-10"
+    >
       <div className="flex flex-col gap-4">
         <div className="flex gap-2 items-center">
           <Input
@@ -71,6 +74,7 @@ export default function UtilisateurForm({
             value={formData.nom}
             onChange={handleChange}
             placeholder="Nom"
+            required
           />
           <Input
             name="prenom"
@@ -78,6 +82,7 @@ export default function UtilisateurForm({
             value={formData.prenom}
             onChange={handleChange}
             placeholder="Prénom"
+            required
           />
         </div>
         <Input
@@ -86,6 +91,7 @@ export default function UtilisateurForm({
           value={formData.email}
           onChange={handleChange}
           placeholder="Email (exemple@gmail.com)"
+          required
         />
 
         {!estEnEdition && (
@@ -95,6 +101,7 @@ export default function UtilisateurForm({
             value={formData.motDePasse}
             onChange={handleChange}
             placeholder="Mot de passe"
+            required
           />
         )}
         <Select
@@ -102,6 +109,7 @@ export default function UtilisateurForm({
           value={formData.role}
           onChange={handleChange}
           placeholder="Role"
+          required
         >
           {ROLES.map((role) => (
             <option id="role" value={role}>
@@ -114,12 +122,18 @@ export default function UtilisateurForm({
         {errorMsg && <FormError message={errorMsg} />}
       </div>
 
-      <Button
-        type="submit"
-        state={isLoading}
-        text={estEnEdition ? "Modifier" : "Créer"}
-        buttonStyle="amber"
-      />
+      <div className="flex justify-end items-center pt-4">
+        <Button
+          type="submit"
+          state={isLoading}
+          text={
+            estEnEdition
+              ? `Modifier ${utilisateur.nom}`
+              : "Ajouter un utilisateur"
+          }
+          buttonStyle="amber"
+        />
+      </div>
     </form>
   );
 }

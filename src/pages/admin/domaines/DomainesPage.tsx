@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { domaineService } from "../../../api/services/domaine.service";
+import { domaineService } from "../../../services/domaine.service";
 import DomaineTable from "../../../components/admin/domaines/DomaineTable";
 import Button from "../../../components/ui/Button";
 import { useState } from "react";

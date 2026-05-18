@@ -97,14 +97,16 @@ export type CreateSessionRequest = {
   dateDebut: string; // ISO 8601 : "2024-03-15T09:00:00"
   dateFin: string;
   lieu?: string;
-  capaciteMax: number;
+  capacite: number;
 };
 
 export type UpdateSessionRequest = {
   dateDebut: string;
   dateFin: string;
+  formateurInterneId?: number; // optionnel — peut être assigné après
+  formateurExterneId?: number;
   lieu?: string;
-  capaciteMax: number;
+  capacite: number;
   // coursId non modifiable après création — métier
 };
 

@@ -1,6 +1,6 @@
 export default function Table({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full rounded-2xl bg-white shadow overflow-hidden overflow-x-auto">
+    <div className="w-full overflow-x-auto border border-neutral-200 rounded-lg overflow-hidden">
       <table className="text-neutral-800 whitespace-nowrap w-full">
         {children}
       </table>
@@ -8,13 +8,33 @@ export default function Table({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function Td({ children }: { children: React.ReactNode }) {
-  return <td className="text-left py-1 px-4 w-16">{children}</td>;
+export function Td({
+  children,
+  right,
+}: {
+  children: React.ReactNode;
+  right?: boolean;
+}) {
+  return (
+    <td className={`text-left py-2 px-4 ${right ? "text-right" : "text-left"}`}>
+      {children}
+    </td>
+  );
 }
 
-export function Th({ children }: { children: React.ReactNode }) {
+export function Th({
+  children,
+  right,
+}: {
+  children: React.ReactNode;
+  right?: boolean;
+}) {
   return (
-    <th className="text-left px-4 border-b border-neutral-200">{children}</th>
+    <th
+      className={`text-left font-semibold px-4 py-2 ${right ? "text-right" : "text-left"}`}
+    >
+      {children}
+    </th>
   );
 }
 
@@ -23,13 +43,21 @@ export function Thead({ children }: { children: React.ReactNode }) {
 }
 
 export function Tr({ children }: { children: React.ReactNode }) {
-  return <tr className=" h-10 text-neutral-700 text-base">{children}</tr>;
+  return (
+    <tr className="text-neutral-700 text-sm font-medium bg-neutral-200">
+      {children}
+    </tr>
+  );
 }
 
 export function BodyTr({ children }: { children: React.ReactNode }) {
   return (
-    <tr className=" h-10 text-neutral-700 border-b-neutral-200 border-b last:border-b-0 text-base">
+    <tr className="hover:bg-white transition-all duration-200 text-neutral-700">
       {children}
     </tr>
   );
+}
+
+export function TBody({ children }: { children: React.ReactNode }) {
+  return <tbody className="divide-y divide-neutral-200">{children}</tbody>;
 }

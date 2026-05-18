@@ -10,9 +10,15 @@ import EvalutationsPage from "../pages/admin/evaluations/EvalutationsPage";
 import SondagesPage from "../pages/admin/sondages/SondagesPage";
 import AuditPage from "../pages/admin/securite/AuditPage";
 import AdminLayout from "../components/layout/AdminLayout";
-import SessionsFormPage from "../pages/admin/sessions/SessionsFormPage";
-import SessionsEditPage from "../pages/admin/sessions/SessionsEditPage";
 import LoginPage from "../pages/auth/LoginPage";
+import AuthLayout from "../components/layout/AuthLayout";
+import SessionDetailPage from "../pages/admin/sessions/SessionDetailPage";
+import FormateurLayout from "../components/layout/FormateurLayout";
+import FormateurDashboardPage from "../pages/formateur/FormateurDashboardPage";
+import FormateurSessionDetailPage from "../pages/formateur/FormateurSessionDetailPage";
+import FormateurEvaluationsPage from "../pages/formateur/FormateurEvaluationsPage";
+import FormateurEvaluationDetailPage from "../pages/formateur/FormateurEvaluationDetailPage";
+import FormateurSessionsPage from "../pages/formateur/FormateurSessionsPage";
 
 function AdminGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, hasRole } = useAuthStore();
@@ -23,6 +29,35 @@ function AdminGuard({ children }: { children: React.ReactNode }) {
   }
   return <>{children}</>;
 }
+
+function FormateurGuard({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, hasRole } = useAuthStore();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!hasRole("FORMATEUR")) return <Navigate to="/unauthorized" replace />;
+  return <>{children}</>;
+}
+
+function CandidatGuard({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, hasRole } = useAuthStore();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!hasRole("CANDIDAT")) return <Navigate to="/unauthorized" replace />;
+  return <>{children}</>;
+}
+
+<Routes>
+  <Route element={<CandidatLayout />}>
+    <Route index element={<Navigate to="dashboard" replace />} />
+    <Route path="dashboard" element={<CandidatDashboardPage />} />
+    <Route path="sessions" element={<CandidatSessionsPage />} />
+    <Route path="evaluations" element={<CandidatEvaluationsPage />} />
+    <Route
+      path="evaluations/:id/passer"
+      element={<CandidatEvaluationPasserPage />}
+    />
+    <Route path="sondages" element={<CandidatSondagesPage />} />
+    <Route path="profil" element={<CandidatProfilPage />} />
+  </Route>
+</Routes>;
 
 export const router = createBrowserRouter([
   {
@@ -70,18 +105,18 @@ export const router = createBrowserRouter([
       },
       {
         path: "sessions",
-        element: <SessionsPage />,
         handle: { crumb: () => "Sessions" },
-      },
-      {
-        path: "sessions/new",
-        element: <SessionsFormPage />,
-        handle: { crumb: () => "Nouvelle session" },
-      },
-      {
-        path: "sessions/:id/edit",
-        element: <SessionsEditPage />,
-        handle: { crumb: () => "Modifier session" },
+        children: [
+          {
+            index: true,
+            element: <SessionsPage />,
+          },
+          {
+            path: ":id",
+            element: <SessionDetailPage />,
+            handle: { crumb: () => "Detail session" },
+          },
+        ],
       },
       {
         path: "evaluations",
@@ -101,8 +136,61 @@ export const router = createBrowserRouter([
     ],
   },
   {
+    path: "/formateur",
+    element: (
+      <FormateurGuard>
+        <FormateurLayout />
+      </FormateurGuard>
+    ),
+    handle: { crumb: () => "Formateur" },
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <FormateurDashboardPage />,
+        handle: { crumb: () => "Dashboard" },
+      },
+      {
+        path: "sessions",
+        element: <FormateurSessionsPage />,
+        handle: { crumb: () => "Sessions" },
+      },
+      {
+        path: "sessions/:id",
+        element: <FormateurSessionDetailPage />,
+      },
+      {
+        path: "evaluations",
+        element: <FormateurEvaluationsPage />,
+        handle: { crumb: () => "Evaluations" },
+      },
+      {
+        path: "evaluations/:id",
+        element: <FormateurEvaluationDetailPage />,
+        handle: { crumb: () => "Detail evaluation" },
+      },
+    ],
+  },
+  {
+    path: "/candidat",
+    element: (
+      <CandidatGuard>
+        <CandidatLayout />
+      </CandidatGuard>
+    ),
+  },
+  {
     path: "/login",
-    element: <LoginPage />,
+    element: <AuthLayout />,
     handle: { crumb: () => "Connexion" },
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+    ],
   },
 ]);

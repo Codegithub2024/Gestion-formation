@@ -1,11 +1,11 @@
 // services/utilisateur.service.ts
-import { apiFetch } from "../base.api";
-import type { Utilisateur } from "../../types/utilisateur.types";
+import { apiFetch } from "../api/base.api";
+import type { Utilisateur } from "../types/utilisateur.types";
 import type {
   UpdateUtilisateurRequest,
   CreateUtilisateurRequest,
-} from "../../types/requests.types";
-import type { Role } from "../../types/enums.types";
+} from "../types/requests.types";
+import type { Role } from "../types/enums.types";
 
 export const utilisateurService = {
   getAll: () => apiFetch<Utilisateur[]>("/api/admin/utilisateurs"),

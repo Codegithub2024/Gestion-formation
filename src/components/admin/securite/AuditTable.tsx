@@ -1,6 +1,6 @@
 import { ShieldAlert } from "lucide-react";
 import type { SecurityLog } from "../../../types/audit.types";
-import Table, { BodyTr, Td, Th, Thead, Tr } from "../../ui/Table";
+import Table, { BodyTr, TBody, Td, Th, Thead, Tr } from "../../ui/Table";
 import Badge from "../../ui/Badge";
 import type { TypeEvenementSecurite } from "../../../types/enums.types";
 
@@ -28,12 +28,12 @@ export default function AuditTable({ logs }: AuditTableProps) {
           <Th>Événement</Th>
           <Th>Utilisateur</Th>
           <Th>IP</Th>
-          <Th>Détails</Th>
+          {/* <Th>Détails</Th> */}
           <Th>Date</Th>
           <Th>Alerte</Th>
         </Tr>
       </Thead>
-      <tbody>
+      <TBody>
         {logs.map((log) => (
           <BodyTr key={log.id}>
             <Td>
@@ -49,7 +49,7 @@ export default function AuditTable({ logs }: AuditTableProps) {
             </Td>
             <Td>{log.username}</Td>
             <Td>{log.adresseIp}</Td>
-            <Td>{log.details ?? "—"}</Td>
+            {/* <Td>{log.details ?? "—"}</Td> */}
             <Td>{new Date(log.dateEvenement).toLocaleString("fr-FR")}</Td>
             <Td>
               <Badge
@@ -59,7 +59,7 @@ export default function AuditTable({ logs }: AuditTableProps) {
             </Td>
           </BodyTr>
         ))}
-      </tbody>
+      </TBody>
     </Table>
   );
 }

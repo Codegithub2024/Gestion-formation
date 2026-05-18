@@ -29,7 +29,7 @@ export default function FormateurInterneTable({
           <th className="pb-3 font-medium text-right">Actions</th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-neutral-100">
+      <tbody className="divide-y divide-neutral-200">
         {formateurs.map((f) => (
           <tr key={f.id}>
             <td className="py-3 font-medium">

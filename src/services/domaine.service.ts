@@ -1,9 +1,9 @@
-import type { Domaine } from "../../types/domaine.types";
+import type { Domaine } from "../types/domaine.types";
 import type {
   CreateDomaineRequest,
   UpdateDomaineRequest,
-} from "../../types/requests.types";
-import { apiFetch } from "../base.api";
+} from "../types/requests.types";
+import { apiFetch } from "../api/base.api";
 
 export const domaineService = {
   getAll: () => apiFetch<Domaine[]>("/api/admin/domaines"),

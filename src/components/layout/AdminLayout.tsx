@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { User2 } from "lucide-react";
+import { PanelLeftClose, PanelLeftOpen, User2 } from "lucide-react";
 import Button from "../ui/Button";
 import { useAuthStore } from "../../store/auth.store";
 import SideBar from "../ui/SideBar";
@@ -54,12 +54,12 @@ export default function AdminLayout() {
       <SideBar />
 
       <main className="p-2 pl-0 flex flex-col flex-1 h-screen bg-neutral-200 overflow-hidden">
-        <div className="rounded-lg flex relative flex-col min-h-full overflow-clip overflow-y-scroll bg-neutral-100 flex-1">
+        <div className="rounded-lg flex relative flex-col min-h-full overflow-clip overflow-y-scroll bg-white flex-1">
           <nav
             ref={navRef}
-            className="border-b border-b-neutral-200 sticky z-10 bg-neutral-100/70 backdrop-blur-md top-0 right-0 px-4"
+            className="border-b border-b-neutral-200 sticky z-10 bg-white/50 backdrop-blur-md top-0 right-0"
           >
-            <div className="container mx-auto flex justify-between min-h-12 items-center">
+            <div className="container mx-auto flex justify-between min-h-12 items-center px-4">
               <div className="flex gap-2 items-center">
                 <Breadcrumbs />
               </div>

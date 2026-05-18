@@ -3,22 +3,16 @@ import { useGSAP } from "@gsap/react";
 import {
   BookOpen,
   CalendarDays,
-  ChartPie,
-  ConciergeBellIcon,
   Database,
   GraduationCap,
-  LucideArrowDownToDot,
-  PanelLeftClose,
-  PanelLeftOpen,
   ShieldAlert,
   Tag,
-  User,
   Users,
-  UsersRound,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import NavButton from "./NavButton";
 import NavGroup from "./NavGroup";
+import AsideButton from "./AsideButton";
 
 // Largeurs en JS — une seule source de vérité, plus de classes Tailwind sur width
 const SIDEBAR_OPEN = 280;
@@ -123,14 +117,18 @@ export default function SideBar() {
       // Pas de classe w-* : GSAP est seul maître de la largeur
     >
       <div className="flex justify-end py-2 p-2">
-        <button
+        {/* <button
           onClick={() => setIsOpen((prev) => !prev)}
           className="hover:bg-black/10 flex justify-center items-center rounded-lg size-9 cursor-pointer"
         >
-          {/* Les deux icônes sont TOUJOURS dans le DOM — GSAP gère leur visibilité */}
           <PanelLeftClose ref={closeIconRef} size={18} className="absolute" />
           <PanelLeftOpen ref={openIconRef} size={18} className="absolute" />
-        </button>
+        </button> */}
+        <AsideButton
+          closeIconRef={closeIconRef}
+          openIconRef={openIconRef}
+          isOpen={() => setIsOpen((prev) => !prev)}
+        />
       </div>
 
       <nav className="flex flex-col px-2">

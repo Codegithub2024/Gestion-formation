@@ -6,7 +6,7 @@ import type {
   CreateCoursRequest,
   UpdateCoursRequest,
 } from "../../../types/requests.types";
-import { coursService } from "../../../api/services/cours.service";
+import { coursService } from "../../../services/cours.service";
 import { ApiError } from "../../../api/base.api";
 import type { Cours } from "../../../types/cours.types";
 import Button from "../../../components/ui/Button";

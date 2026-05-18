@@ -2,8 +2,8 @@ import type {
   Cours,
   CreateCoursDTO,
   UpdateCoursDTO,
-} from "../../types/cours.types";
-import { apiFetch } from "../base.api";
+} from "../types/cours.types";
+import { apiFetch } from "../api/base.api";
 
 export const coursService = {
   getAll: () => apiFetch<Cours[]>("/api/admin/cours"),

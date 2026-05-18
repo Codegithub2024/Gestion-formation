@@ -64,10 +64,6 @@ export default function LoginPage() {
     }
   };
 
-  useEffect(() => {
-    if (error) toast.error(error);
-  });
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -97,11 +93,11 @@ export default function LoginPage() {
           required
         />
         {error && <FormError message={error} />}
-        <div className="flex items-center py-3 pb-0">
+        <div className="flex items-center pt-4">
           <Button
             type="submit"
             text="Envoyer"
-            buttonStyle="blue"
+            buttonStyle="black"
             className="flex-1 h-10 *:text-base"
             state={loading}
           />

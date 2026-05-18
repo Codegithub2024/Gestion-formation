@@ -1,7 +1,7 @@
 // services/audit.service.ts
-import type { SecurityLog } from "../../types/audit.types";
-import type { TypeEvenementSecurite } from "../../types/enums.types";
-import { apiFetch } from "../base.api";
+import type { SecurityLog } from "../types/audit.types";
+import type { TypeEvenementSecurite } from "../types/enums.types";
+import { apiFetch } from "../api/base.api";
 
 export const auditService = {
   // Tous les logs

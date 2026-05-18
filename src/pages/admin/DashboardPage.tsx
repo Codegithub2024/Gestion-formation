@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/auth.store";
-import { statsService } from "../../api/services/stats.service";
+import { statsService } from "../../services/stats.service";
 import { CalendarDaysIcon, ChevronRight, Users } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useEffect, useRef } from "react";
@@ -32,10 +32,10 @@ export default function DashboardPage() {
       animRef.current = gsap.timeline().to(".card", {
         autoAlpha: 1,
         y: 0,
-        duration: 0.75,
-        ease: "expo.out",
+        duration: 0.25,
+        ease: "back.out(1.7)",
         stagger: 0.085,
-        delay: 0.1,
+        delay: 0.3,
         overwrite: true,
       });
     },

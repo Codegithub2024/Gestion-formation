@@ -1,6 +1,5 @@
 // components/ui/Dialog.tsx
 import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
 import { useDialogStore } from "../../store/dialog.store";
 import { X } from "lucide-react";
 
@@ -32,21 +31,24 @@ export default function Dialog() {
       onClick={(e) => {
         if (e.target === overlayRef.current) close();
       }}
-      className={`fixed inset-0 z-5000 transition-all duration-300 flex bg-black/10 overflow-y-scroll py-10 items-center-safe justify-center-safe ${isOpen ? "backdrop-blur-xs opacity-100" : "opacity-0"}`}
+      className={`fixed inset-0 z-5000 transition-all duration-300 flex overflow-y-scroll py-10 items-center-safe justify-center-safe ${isOpen ? "opacity-100" : "opacity-0"}`}
     >
-      <div className="relative flex flex-col z-10 bg-white rounded-2xl shadow-xl w-full max-w-md mx-4">
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-xs"></div>
+      <div className="relative flex flex-col z-10 gap-3 w-full max-w-md mx-4">
         <button
           onClick={close}
-          className="text-red-50 absolute cursor-pointer hover:brightness-95 duration-150 -top-3 -right-3 p-1 active:scale-95 bg-red-500 ring-2 ring-red-500 border border-white hover:scale-[1.02] rounded-full transition-all flex items-center justify-center"
+          className="text-red-50 absolute cursor-pointer hover:brightness-95 duration-150 top-1 right-1 p-1.5 active:scale-95 bg-red-500 ring-2 ring-red-500 border border-white hover:scale-[1.02] rounded-full transition-all flex items-center justify-center"
         >
           <X size={16} strokeWidth={3} />
         </button>
         {titre && (
-          <div className="flex px-10 py-4 border-b border-b-neutral-200 justify-center items-center text-center">
-            <h2 className="text-lg font-semibold">{titre}</h2>
+          <div className="flex py-2 p-4 bg-white max-w-[80%] w-fit border-b rounded-full border-b-neutral-200 items-center overflow-hidden">
+            <h2 className="text-base font-semibold leading-none hyphens-auto text-neutral-800">
+              {titre}
+            </h2>
           </div>
         )}
-        {content}
+        <div className="bg-white rounded-2xl">{content}</div>
       </div>
     </div>
   );
