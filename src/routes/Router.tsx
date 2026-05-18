@@ -19,6 +19,13 @@ import FormateurSessionDetailPage from "../pages/formateur/FormateurSessionDetai
 import FormateurEvaluationsPage from "../pages/formateur/FormateurEvaluationsPage";
 import FormateurEvaluationDetailPage from "../pages/formateur/FormateurEvaluationDetailPage";
 import FormateurSessionsPage from "../pages/formateur/FormateurSessionsPage";
+import CandidatLayout from "../components/layout/CandidatLayout";
+import CandidatDashboardPage from "../pages/candidat/CandidatDashboardPage";
+import CandidatSessionsPage from "../pages/candidat/CandidatSessionsPage";
+import CandidatEvaluationsPage from "../pages/candidat/CandidatEvaluationsPage";
+import CandidatEvaluationPasserPage from "../pages/candidat/CandidatEvaluationPasserPage";
+import CandidatSondagesPage from "../pages/candidat/CandidatSondagesPage";
+import CandidatProfilPage from "../pages/candidat/CandidatProfilPage";
 
 function AdminGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, hasRole } = useAuthStore();
@@ -43,21 +50,6 @@ function CandidatGuard({ children }: { children: React.ReactNode }) {
   if (!hasRole("CANDIDAT")) return <Navigate to="/unauthorized" replace />;
   return <>{children}</>;
 }
-
-<Routes>
-  <Route element={<CandidatLayout />}>
-    <Route index element={<Navigate to="dashboard" replace />} />
-    <Route path="dashboard" element={<CandidatDashboardPage />} />
-    <Route path="sessions" element={<CandidatSessionsPage />} />
-    <Route path="evaluations" element={<CandidatEvaluationsPage />} />
-    <Route
-      path="evaluations/:id/passer"
-      element={<CandidatEvaluationPasserPage />}
-    />
-    <Route path="sondages" element={<CandidatSondagesPage />} />
-    <Route path="profil" element={<CandidatProfilPage />} />
-  </Route>
-</Routes>;
 
 export const router = createBrowserRouter([
   {
@@ -181,6 +173,42 @@ export const router = createBrowserRouter([
         <CandidatLayout />
       </CandidatGuard>
     ),
+    children: [
+      {
+        index: true,
+        element: <Navigate to="dashboard" replace />,
+      },
+      {
+        path: "dashboard",
+        element: <CandidatDashboardPage />,
+        handle: { crumb: () => "Dashboard" },
+      },
+      {
+        path: "sessions",
+        element: <CandidatSessionsPage />,
+        handle: { crumb: () => "Sessions" },
+      },
+      {
+        path: "evaluations",
+        element: <CandidatEvaluationsPage />,
+        handle: { crumb: () => "Évaluations" },
+      },
+      {
+        path: "evaluations/:id/passer",
+        element: <CandidatEvaluationPasserPage />,
+        handle: { crumb: () => "Passer evaluation" },
+      },
+      {
+        path: "sondages",
+        element: <CandidatSondagesPage />,
+        handle: { crumb: () => "Sondages" },
+      },
+      {
+        path: "profil",
+        element: <CandidatProfilPage />,
+        handle: { crumb: () => "Profil" },
+      },
+    ],
   },
   {
     path: "/login",

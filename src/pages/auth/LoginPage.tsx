@@ -77,7 +77,7 @@ export default function LoginPage() {
           Veillez vous identifier
         </span>
       </div>
-      <div className="flex flex-col flex-1 gap-3 p-6 lg:p-10">
+      <div className="flex flex-col flex-1 gap-4 p-6 lg:p-10">
         <Input
           onChange={handleChange}
           type="email"

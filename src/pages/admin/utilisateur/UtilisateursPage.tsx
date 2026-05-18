@@ -125,7 +125,7 @@ export default function UtilisateursPage() {
         <Button
           onClick={handleCreer}
           text="Nouvel utilisateur"
-          buttonStyle="amber"
+          buttonStyle="black"
           className="px-2"
         >
           <Plus size={18} />

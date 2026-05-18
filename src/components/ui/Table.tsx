@@ -1,6 +1,6 @@
 export default function Table({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full overflow-x-auto border border-neutral-200 rounded-lg overflow-hidden">
+    <div className="w-full overflow-x-auto overflow-hidden">
       <table className="text-neutral-800 whitespace-nowrap w-full">
         {children}
       </table>
@@ -44,7 +44,7 @@ export function Thead({ children }: { children: React.ReactNode }) {
 
 export function Tr({ children }: { children: React.ReactNode }) {
   return (
-    <tr className="text-neutral-700 text-sm font-medium bg-neutral-200">
+    <tr className="text-neutral-700 text-sm font-medium border-b border-b-neutral-500">
       {children}
     </tr>
   );
@@ -52,7 +52,7 @@ export function Tr({ children }: { children: React.ReactNode }) {
 
 export function BodyTr({ children }: { children: React.ReactNode }) {
   return (
-    <tr className="hover:bg-white transition-all duration-200 text-neutral-700">
+    <tr className="hover:bg-neutral-100 transition-all duration-200 text-neutral-700">
       {children}
     </tr>
   );
