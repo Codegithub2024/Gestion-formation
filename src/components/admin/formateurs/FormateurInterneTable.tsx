@@ -1,5 +1,6 @@
 // components/admin/formateurs/FormateurInterneTable.tsx
 import type { FormateurInterne } from "../../../types/formateur.types";
+import Table, { BodyTr, TBody, Td, Th, Thead, Tr } from "../../ui/Table";
 
 type Props = {
   formateurs: FormateurInterne[];
@@ -20,23 +21,23 @@ export default function FormateurInterneTable({
     return <p className="text-sm text-neutral-500">Aucun formateur interne.</p>;
 
   return (
-    <table className="w-full text-sm">
-      <thead>
-        <tr className="border-b text-left text-neutral-500">
-          <th className="pb-3 font-medium">Nom</th>
-          <th className="pb-3 font-medium">Email</th>
-          <th className="pb-3 font-medium">Cours enseignables</th>
-          <th className="pb-3 font-medium text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-neutral-200">
+    <Table>
+      <Thead>
+        <Tr>
+          <Th>Nom</Th>
+          <Th>Email</Th>
+          <Th>Cours enseignables</Th>
+          <Th right>Actions</Th>
+        </Tr>
+      </Thead>
+      <TBody>
         {formateurs.map((f) => (
-          <tr key={f.id}>
-            <td className="py-3 font-medium">
+          <BodyTr key={f.id}>
+            <Td>
               {f.utilisateur.prenom} {f.utilisateur.nom}
-            </td>
-            <td className="py-3 text-neutral-500">{f.utilisateur.email}</td>
-            <td className="py-3">
+            </Td>
+            <Td>{f.utilisateur.email}</Td>
+            <Td>
               {f.coursEnseignables.length === 0 ? (
                 <span className="text-neutral-400 text-xs">Aucun cours</span>
               ) : (
@@ -51,8 +52,8 @@ export default function FormateurInterneTable({
                   ))}
                 </div>
               )}
-            </td>
-            <td className="py-3">
+            </Td>
+            <Td>
               <div className="flex justify-end gap-2">
                 <button
                   onClick={() => onGererCours(f)}
@@ -67,10 +68,10 @@ export default function FormateurInterneTable({
                   Supprimer
                 </button>
               </div>
-            </td>
-          </tr>
+            </Td>
+          </BodyTr>
         ))}
-      </tbody>
-    </table>
+      </TBody>
+    </Table>
   );
 }

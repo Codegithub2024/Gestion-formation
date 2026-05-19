@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
         <AdminLayout />
       </AdminGuard>
     ),
-    handle: { crumb: () => "Administration" },
+    handle: { crumb: () => "Admin" },
     children: [
       {
         path: "unauthorized",

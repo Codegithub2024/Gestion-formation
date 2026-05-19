@@ -5,6 +5,7 @@ import {
   CalendarDays,
   Database,
   GraduationCap,
+  LogOut,
   ShieldAlert,
   Tag,
   Users,
@@ -13,6 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import NavButton from "./NavButton";
 import NavGroup from "./NavGroup";
 import AsideButton from "./AsideButton";
+import { useAuthStore } from "../../store/auth.store";
 
 // Largeurs en JS — une seule source de vérité, plus de classes Tailwind sur width
 const SIDEBAR_OPEN = 280;
@@ -28,6 +30,7 @@ export default function SideBar() {
   const asideRef = useRef<HTMLElement>(null);
   const closeIconRef = useRef<SVGSVGElement>(null);
   const openIconRef = useRef<SVGSVGElement>(null);
+  const logout = useAuthStore((state) => state.logout);
 
   // Timeline principale de la sidebar — créée une fois, pilotée ensuite
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -113,7 +116,7 @@ export default function SideBar() {
   return (
     <aside
       ref={asideRef}
-      className="flex z-1000 flex-col sticky top-0 bg-neutral-200 left-0 h-screen"
+      className="flex z-1000 flex-col sticky top-0 left-0 h-screen"
       // Pas de classe w-* : GSAP est seul maître de la largeur
     >
       <div className="flex justify-end py-2 p-2">
@@ -131,7 +134,7 @@ export default function SideBar() {
         />
       </div>
 
-      <nav className="flex flex-col px-2">
+      <nav className="flex flex-col px-2 flex-1 pb-2">
         <NavGroup isNavbarOpen={isOpen} groupName="Principal">
           <NavButton
             isNavbarOpen={isOpen}
@@ -173,6 +176,10 @@ export default function SideBar() {
             <ShieldAlert size={20} />
           </NavButton>
         </NavGroup>
+        <span className="flex-1 rounded-lg"></span>
+        <button onClick={logout} className="nav-button h-fit hover:bg-black/10">
+          <LogOut size={20} strokeWidth={3} className="text-neutral-600" />
+        </button>
       </nav>
     </aside>
   );

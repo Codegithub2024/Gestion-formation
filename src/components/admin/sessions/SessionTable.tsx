@@ -1,5 +1,6 @@
 // components/admin/sessions/SessionTable.tsx
 import type { Session } from "../../../types/session.types";
+import Table, { BodyTr, TBody, Td, Th, Thead, Tr } from "../../ui/Table";
 import StatutBadge from "./StatutBadge";
 
 type Props = {
@@ -21,19 +22,19 @@ export default function SessionTable({
     return <p className="text-sm text-neutral-500">Aucune session.</p>;
 
   return (
-    <table className="w-full text-sm">
-      <thead>
-        <tr className="border-b text-left text-neutral-500">
-          <th className="pb-3 font-medium">Cours</th>
-          <th className="pb-3 font-medium">Dates</th>
-          <th className="pb-3 font-medium">Lieu</th>
-          <th className="pb-3 font-medium">Formateur</th>
-          <th className="pb-3 font-medium">Statut</th>
-          <th className="pb-3 font-medium">Capacité</th>
-          <th className="pb-3 font-medium text-right">Actions</th>
-        </tr>
-      </thead>
-      <tbody className="divide-y divide-neutral-100">
+    <Table>
+      <Thead>
+        <Tr>
+          <Th>Cours</Th>
+          <Th>Dates</Th>
+          <Th>Lieu</Th>
+          <Th>Formateur</Th>
+          <Th>Statut</Th>
+          <Th>Capacité</Th>
+          <Th right>Actions</Th>
+        </Tr>
+      </Thead>
+      <TBody>
         {sessions.map((s) => {
           const formateurNom = s.formateurInterne
             ? `${s.formateurInterne.utilisateur.prenom} ${s.formateurInterne.utilisateur.nom}`
@@ -42,9 +43,9 @@ export default function SessionTable({
               : "—";
 
           return (
-            <tr key={s.id} className="hover:bg-neutral-50 transition-colors">
-              <td className="py-3 font-medium">{s.cours?.titre}</td>
-              <td className="py-3 text-neutral-500">
+            <BodyTr key={s.id}>
+              <Td>{s.cours?.titre}</Td>
+              <Td>
                 <div className="flex flex-col">
                   <span>
                     {new Date(s.dateDebut).toLocaleDateString("fr-FR")}
@@ -53,14 +54,14 @@ export default function SessionTable({
                     → {new Date(s.dateFin).toLocaleDateString("fr-FR")}
                   </span>
                 </div>
-              </td>
-              <td className="py-3 text-neutral-500">{s.lieu ?? "—"}</td>
-              <td className="py-3 text-neutral-500">{formateurNom}</td>
-              <td className="py-3">
+              </Td>
+              <Td>{s.lieu ?? "—"}</Td>
+              <Td>{formateurNom}</Td>
+              <Td>
                 <StatutBadge statut={s.statut} />
-              </td>
-              <td className="py-3 text-neutral-500">{s.capaciteMax}</td>
-              <td className="py-3">
+              </Td>
+              <Td>{s.capaciteMax}</Td>
+              <Td right>
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={() => onVoir(s.id)}
@@ -75,11 +76,11 @@ export default function SessionTable({
                     Supprimer
                   </button>
                 </div>
-              </td>
-            </tr>
+              </Td>
+            </BodyTr>
           );
         })}
-      </tbody>
-    </table>
+      </TBody>
+    </Table>
   );
 }

@@ -89,7 +89,7 @@ export default function SessionsPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-xl font-semibold">Sessions</h1>

@@ -304,7 +304,7 @@ export default function SessionDetailPage() {
         </div>
 
         {/* Formateur */}
-        <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-xl">
+        <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-xl border border-neutral-200">
           <div className="flex-1">
             <p className="text-xs text-neutral-500 mb-0.5">Formateur</p>
             <p className="text-sm font-medium">
@@ -341,7 +341,7 @@ export default function SessionDetailPage() {
         </h2>
 
         {/* Onglets de filtre par statut */}
-        <div className="flex gap-1 flex-wrap">
+        <div className="flex gap-1 flex-wrap bg-black/5 w-fit p-1 rounded-full">
           {(
             [
               { key: "TOUS", label: "Tous", count: inscriptions.length },
@@ -366,18 +366,18 @@ export default function SessionDetailPage() {
             <button
               key={filtre.key}
               onClick={() => setFiltreInscription(filtre.key as any)}
-              className={`px-3 py-1.5 text-xs rounded-lg transition-colors flex items-center gap-1.5 ${
+              className={`px-3 py-2 font-medium text-xs rounded-full transition-colors flex items-center gap-1 ${
                 filtreInscription === filtre.key
-                  ? "bg-neutral-900 text-white"
-                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                  ? "bg-white text-neutral-800"
+                  : " text-neutral-600 hover:bg-black/5"
               }`}
             >
               {filtre.label}
               <span
-                className={`text-xs px-1.5 py-0.5 rounded-full ${
+                className={`text-xs px-1.5 py-0.5 leading-none rounded-full ${
                   filtreInscription === filtre.key
-                    ? "bg-white/20"
-                    : "bg-neutral-200"
+                    ? "bg-black/10"
+                    : "bg-black/5"
                 }`}
               >
                 {filtre.count}

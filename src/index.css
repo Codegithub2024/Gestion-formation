@@ -42,7 +42,7 @@
   }
 
   .nav-button {
-    @apply rounded-lg relative overflow-hidden flex-1 inline-flex justify-start whitespace-nowrap items-center min-h-9 px-2 transition-all duration-150 ease-out cursor-pointer;
+    @apply rounded-lg relative overflow-hidden inline-flex justify-start whitespace-nowrap items-center min-h-9 px-2 transition-all duration-150 ease-out cursor-pointer ;
   }
 
   .nav-button-text {

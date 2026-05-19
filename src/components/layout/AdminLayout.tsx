@@ -14,7 +14,7 @@ gsap.registerPlugin(useGSAP);
 
 export default function AdminLayout() {
   const user = useAuthStore((state) => state.user);
-  const logout = useAuthStore((state) => state.logout);
+
   const [open, setOpen] = useState(false);
   const profileRef = useRef(null);
   const navRef = useRef(null);
@@ -50,14 +50,14 @@ export default function AdminLayout() {
   }, [open]);
 
   return (
-    <div ref={contentRef} className="flex bg-neutral-200 relative">
+    <div ref={contentRef} className="flex bg-primary-amber-text/5 relative">
       <SideBar />
 
-      <main className="p-2 pl-0 flex flex-col flex-1 h-screen bg-neutral-200 overflow-hidden">
-        <div className="rounded-lg flex relative flex-col min-h-full overflow-clip overflow-y-scroll bg-white flex-1">
+      <main className="p-2 pl-0 flex flex-col flex-1 h-screen overflow-hidden">
+        <div className="rounded-lg border border-neutral-200 flex relative flex-col min-h-full overflow-clip overflow-y-scroll flex-1">
           <nav
             ref={navRef}
-            className="border-b border-b-neutral-200 sticky z-10 bg-white/50 backdrop-blur-md top-0 right-0"
+            className="border-b border-b-neutral-200 sticky z-10 bg-neutral-100/50 backdrop-blur-md top-0 right-0"
           >
             <div className="container mx-auto flex justify-between min-h-12 items-center px-4">
               <div className="flex gap-2 items-center">
@@ -65,15 +65,27 @@ export default function AdminLayout() {
               </div>
 
               <div className="relative">
-                <div
-                  onClick={() => setOpen(!open)}
-                  className="flex justify-center cursor-pointer items-center bg-primary-text rounded-full border border-neutral-200 size-9 bg-neutral-800 text-neutral-100"
-                >
-                  <p className="text-base font-bold ">
-                    {user?.email?.charAt(0).toUpperCase()}
-                  </p>
+                <div className="flex gap-2 items-center">
+                  <div className="flex flex-col items-end gap-0.5">
+                    <p className="font-bold text-xs w-fit tracking-tight text-neutral-700 leading-none">
+                      {user?.role}
+                    </p>
+                    <div className="leading-none px-2 py-0.5 rounded-md bg-primary-amber-text/10">
+                      <p className="text-xs tracking-tight text-neutral-600 font-semibold">
+                        {user?.email}
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    onClick={() => setOpen(!open)}
+                    className="flex justify-center cursor-pointer items-center bg-primary-text rounded-full border border-neutral-200 size-9 bg-neutral-800 text-neutral-100"
+                  >
+                    <p className="text-base font-bold ">
+                      {user?.email?.charAt(0).toUpperCase()}
+                    </p>
+                  </div>
                 </div>
-                <div
+                {/* <div
                   ref={profileRef}
                   className="absolute top-full right-0 pt-2"
                 >
@@ -82,16 +94,7 @@ export default function AdminLayout() {
                       <div className="flex size-10 justify-center items-center">
                         <User2 size={32} />
                       </div>
-                      <div className="flex flex-col gap-0.5">
-                        <p className="font-bold text-sm tracking-tight text-neutral-700 leading-none">
-                          {user?.role}
-                        </p>
-                        <div className="leading-none px-2 py-0.5 rounded-md bg-primary-amber-text/10">
-                          <p className="text-xs tracking-tight text-neutral-600 font-semibold">
-                            {user?.email}
-                          </p>
-                        </div>
-                      </div>
+
                     </div>
                     <div className="py-2 flex-1">
                       <hr className="border-neutral-200 border" />
@@ -104,7 +107,7 @@ export default function AdminLayout() {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </nav>

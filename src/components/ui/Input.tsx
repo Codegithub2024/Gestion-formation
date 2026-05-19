@@ -24,7 +24,7 @@ export function Select({ ...props }: SelectProps) {
     <div className="grid gap-1.5 flex-1">
       <label
         htmlFor={props.name}
-        className="text-sm leading-none capitalize text-neutral-500"
+        className="text-sm leading-none capitalize text-neutral-800"
       >
         {props.name}
         {props.required ? <span className="text-red-500 ml-0.5">*</span> : null}
@@ -41,7 +41,7 @@ export function Textarea({ ...props }: TextareaProps) {
     <div className="grid gap-1.5 flex-1">
       <label
         htmlFor={props.name}
-        className="text-sm leading-none capitalize text-neutral-500"
+        className="text-sm leading-none capitalize text-neutral-800"
       >
         {props.name}
         {props.required ? <span className="text-red-500 ml-0.5">*</span> : null}

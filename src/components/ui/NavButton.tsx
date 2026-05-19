@@ -9,7 +9,7 @@ gsap.registerPlugin(useGSAP);
 
 type NavLinkProps = {
   to: string;
-  text: string;
+  text?: string;
   children?: React.ReactNode;
   isNavbarOpen?: boolean;
 };
@@ -73,7 +73,7 @@ export default function NavButton({ to, text, children, isNavbarOpen = true }: N
         className={({ isActive }) =>
           `nav-button ring-1 ${
             isActive
-              ? "bg-white text-neutral-800 ring-transparent"
+              ? "bg-white shadow ring-1 text-neutral-800 ring-neutral-200"
               : "hover:bg-black/5 text-neutral-500 ring-transparent group"
           }`
         }

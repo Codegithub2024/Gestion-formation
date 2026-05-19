@@ -17,6 +17,8 @@ import type {
   FormateurExterne,
 } from "../../../types/formateur.types";
 import type { CreateFormateurExterneRequest } from "../../../types/requests.types";
+import Button from "../../../components/ui/Button";
+import { Plus } from "lucide-react";
 
 type Onglet = "internes" | "externes";
 
@@ -314,25 +316,28 @@ export default function FormateursPage() {
             externe(s)
           </p>
         </div>
-        <button
+        <Button
+          text={
+            onglet === "internes"
+              ? "Nouveau formateur interne"
+              : "Nouveau formateur externe"
+          }
           onClick={
             onglet === "internes" ? handleCreerInterne : handleCreerExterne
           }
-          className="bg-neutral-900 text-white text-sm px-4 py-2 rounded-lg"
+          buttonStyle="amber"
         >
-          {onglet === "internes"
-            ? "Nouveau formateur interne"
-            : "Nouveau formateur externe"}
-        </button>
+          <Plus className="w-4 h-4" />
+        </Button>
       </div>
 
       {/* Onglets */}
-      <div className="flex gap-1 bg-neutral-100 p-1 rounded-lg w-fit">
+      <div className="flex gap-1 bg-black/5 p-1 rounded-full w-fit">
         {(["internes", "externes"] as Onglet[]).map((o) => (
           <button
             key={o}
             onClick={() => setOnglet(o)}
-            className={`px-4 py-1.5 text-sm rounded-md transition-all capitalize ${
+            className={`px-4 py-1.5 text-sm rounded-full transition-all capitalize ${
               onglet === o
                 ? "bg-white text-neutral-900 font-medium shadow-sm"
                 : "text-neutral-500 hover:text-neutral-700"

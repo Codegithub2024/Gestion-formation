@@ -1,6 +1,6 @@
 import { Pen, Trash2 } from "lucide-react";
 import type { Cours } from "../../../types/cours.types";
-import Table, { BodyTr, Td, Th, Thead, Tr } from "../../ui/Table";
+import Table, { BodyTr, TBody, Td, Th, Thead, Tr } from "../../ui/Table";
 
 type CoursTableProps = {
   cours: Cours[];
@@ -25,49 +25,49 @@ export default function CoursTable({
 
   const badge = (actif: boolean) => {
     return actif ? (
-      <span className="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">
+      <p className="text-sm flex justify-start items-center gap-2 font-medium mr-2 px-2.5 py-0.5 rounded-full text-neutral-800">
+        <span className="size-2 rounded-full bg-teal-600 animate-pulse"></span>
         Actif
-      </span>
+      </p>
     ) : (
-      <span className="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">
+      <p className="text-sm flex justify-start items-center gap-2 font-medium mr-2 px-2.5 py-0.5 rounded-full text-neutral-800">
+        <span className="size-2 rounded-full bg-rose-600 animate-pulse"></span>
         Inactif
-      </span>
+      </p>
     );
   };
 
   return (
-    <div className=" flex rounded-2xl overflow-hidden mb-10">
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>Titre</Th>
-            <Th>Domaine</Th>
-            <Th>Durée</Th>
-            <Th>Status</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <tbody>
-          {cours.map((cours) => (
-            <BodyTr key={cours.id}>
-              <Td>{cours.titre}</Td>
-              <Td>{cours.domaine.nom}</Td>
-              <Td>{cours.dureeHeures}h</Td>
-              <Td>{badge(cours.actif)}</Td>
-              <Td>
-                <div className="flex items-center gap-2">
-                  <button onClick={() => onEdit(cours)}>
-                    <Pen size={18} />
-                  </button>
-                  <button onClick={() => onDelete(cours.id)}>
-                    <Trash2 size={18} />
-                  </button>
-                </div>
-              </Td>
-            </BodyTr>
-          ))}
-        </tbody>
-      </Table>
-    </div>
+    <Table>
+      <Thead>
+        <Tr>
+          <Th>Titre</Th>
+          <Th>Domaine</Th>
+          <Th>Durée</Th>
+          <Th>Status</Th>
+          <Th right>Actions</Th>
+        </Tr>
+      </Thead>
+      <TBody>
+        {cours.map((cours) => (
+          <BodyTr key={cours.id}>
+            <Td>{cours.titre}</Td>
+            <Td>{cours.domaine.nom}</Td>
+            <Td>{cours.dureeHeures}h</Td>
+            <Td>{badge(cours.actif)}</Td>
+            <Td right>
+              <div className="flex items-center justify-end gap-2">
+                <button onClick={() => onEdit(cours)}>
+                  <Pen size={18} />
+                </button>
+                <button onClick={() => onDelete(cours.id)}>
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </Td>
+          </BodyTr>
+        ))}
+      </TBody>
+    </Table>
   );
 }

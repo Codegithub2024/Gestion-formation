@@ -20,13 +20,18 @@ export function Breadcrumbs() {
 
   return (
     <nav aria-label="breadcrumb" className="breadcrumb-container">
-      <ol style={{ display: "flex", listStyle: "none", gap: "10px" }}>
+      <ol className="flex gap-1 text-sm font-medium">
         {crumbs.map((crumb, index) => (
           <li key={index}>
             {index < crumbs.length - 1 ? (
               <>
-                <Link to={crumb.path}>{crumb.label}</Link>
-                <span style={{ marginLeft: "10px" }}>/</span>
+                <Link
+                  to={crumb.path}
+                  className="text-neutral-500 hover:underline hover:text-blue-500"
+                >
+                  {crumb.label}
+                </Link>
+                <span className="ml-1">/</span>
               </>
             ) : (
               <span className="current-page">{crumb.label}</span>
