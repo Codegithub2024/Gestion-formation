@@ -96,13 +96,13 @@ export default function FormateurSessionDetailPage() {
     inscrits.some((i) => i.statut === "CONFIRMEE");
 
   return (
-    <div className="flex flex-col gap-8 p-6">
+    <div className="flex flex-col gap-8">
       {/* Retour */}
       <button
         onClick={() => navigate("/formateur/sessions")}
         className="text-sm text-neutral-500 hover:text-neutral-900 w-fit transition-colors"
       >
-        ← Retour aux sessions
+        ← Retour
       </button>
 
       {/* En-tête */}
@@ -159,12 +159,12 @@ export default function FormateurSessionDetailPage() {
           { label: "Lieu", value: session.lieu ?? "Non défini" },
           {
             label: "Inscrits confirmés",
-            value: `${comptes.CONFIRMEE} / ${session.capaciteMax}`,
+            value: `${comptes.CONFIRMEE} / ${session.capacite}`,
           },
         ].map((info) => (
           <div
             key={info.label}
-            className="flex flex-col gap-1 p-3 bg-neutral-50 rounded-xl"
+            className="flex flex-col gap-1 p-3 bg-white border border-black/10 rounded-xl"
           >
             <p className="text-xs text-neutral-500">{info.label}</p>
             <p className="text-sm font-medium">{info.value}</p>

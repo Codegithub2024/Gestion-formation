@@ -46,6 +46,9 @@ h1, h2, h3, h4, h5, h6 {
   --color-primary: rgb(234, 227, 220);
   --color-light: #F7F6F2;
 
+  --color-deep-amber: #FAB319;
+  --color-dark-amber: #422400;
+
   /* --spacing-*: var(--spacing-*);
   --color-*: var(--color-*); */
 

@@ -1,8 +1,4 @@
-export type Role =
-  | "ADMIN"
-  | "GESTIONNAIRE_FORMATION"
-  | "FORMATEUR"
-  | "CANDIDAT";
+export type Role = "ADMIN" | "RESPONSABLE_FORMATION" | "FORMATEUR" | "CANDIDAT";
 
 export type StatutSession = "PLANIFIEE" | "EN_COURS" | "TERMINEE" | "ANNULEE";
 

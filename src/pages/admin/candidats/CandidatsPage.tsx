@@ -1,6 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { candidatAdminService } from "../../../services/candidat.admin.service";
+import Table, {
+  BodyTr,
+  TBody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "../../../components/ui/Table";
 
 export default function CandidatsPage() {
   const navigate = useNavigate();
@@ -27,37 +35,35 @@ export default function CandidatsPage() {
           <p className="text-sm">Aucun candidat enregistré.</p>
         </div>
       ) : (
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b text-left text-neutral-500">
-              <th className="pb-3 font-medium">Nom</th>
-              <th className="pb-3 font-medium">Email</th>
-              <th className="pb-3 font-medium">Inscrit le</th>
-              <th className="pb-3 font-medium text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-neutral-100">
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Nom</Th>
+              <Th>Email</Th>
+              <Th>Inscrit le</Th>
+              <Th right>Actions</Th>
+            </Tr>
+          </Thead>
+          <TBody>
             {candidats.map((c) => (
-              <tr key={c.id} className="hover:bg-neutral-50 transition-colors">
-                <td className="py-3 font-medium">
+              <BodyTr key={c.id}>
+                <Td>
                   {c.prenom} {c.nom}
-                </td>
-                <td className="py-3 text-neutral-500">{c.email}</td>
-                <td className="py-3 text-neutral-500">
-                  {new Date(c.dateCreation).toLocaleDateString("fr-FR")}
-                </td>
-                <td className="py-3 text-right">
+                </Td>
+                <Td>{c.email}</Td>
+                <Td>{new Date(c.dateCreation).toLocaleDateString("fr-FR")}</Td>
+                <Td right>
                   <button
                     onClick={() => navigate(`/admin/candidats/${c.id}`)}
                     className="text-xs px-3 py-1.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
                   >
                     Voir le profil
                   </button>
-                </td>
-              </tr>
+                </Td>
+              </BodyTr>
             ))}
-          </tbody>
-        </table>
+          </TBody>
+        </Table>
       )}
     </div>
   );

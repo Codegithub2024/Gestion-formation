@@ -130,7 +130,7 @@ export default function SondagesPage() {
             <div
               onClick={() => navigate(`/admin/sondages/${s.id}`)}
               key={s.id}
-              className="flex items-center justify-between hover:ring-1 hover:ring-black/20 transition-all duration-150 rounded-lg bg-white shadow hover:border-neutral-200 cursor-pointer"
+              className="flex items-center justify-between hover:ring-1 hover:ring-black/20 transition-all duration-150 rounded-lg bg-white border border-black/10 hover:border-neutral-200 cursor-pointer"
             >
               <div className="flex flex-col p-4 flex-1 min-w-0">
                 <div className="flex items-center gap-3">
@@ -158,7 +158,7 @@ export default function SondagesPage() {
                 </div>
               </div>
 
-              <div className="flex gap-2 ml-4 shrink-0 p-4 bg-grid grid-size-4 grid-color-neutral-200">
+              <div className="flex gap-2 ml-4 shrink-0 p-4">
                 <button
                   onClick={() => handleSupprimer(s)}
                   className="text-xs px-3 py-1.5 border border-red-200 text-red-500 rounded-lg hover:bg-red-50 transition-colors"

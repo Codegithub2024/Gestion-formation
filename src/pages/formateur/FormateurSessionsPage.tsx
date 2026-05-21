@@ -104,7 +104,7 @@ export default function FormateurSessionsPage() {
                     {new Date(s.dateFin).toLocaleDateString("fr-FR")}
                   </span>
                   {s.lieu && <span>📍 {s.lieu}</span>}
-                  <span>👥 {s.capaciteMax} places</span>
+                  <span>👥 {s.capacite} places</span>
                 </div>
               </div>
               <span className="text-neutral-400 text-sm">→</span>

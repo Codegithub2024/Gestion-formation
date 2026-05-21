@@ -18,7 +18,7 @@ interface UtilisateurFormProps {
   errorMsg?: string;
 }
 
-const ROLES = ["CANDIDAT", "ADMIN", "GESTIONNAIRE_FORMATION", "FORMATEUR"];
+const ROLES = ["CANDIDAT", "ADMIN", "RESPONSABLE_FORMATION", "FORMATEUR"];
 
 export default function UtilisateurForm({
   utilisateur,

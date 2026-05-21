@@ -84,6 +84,11 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 rounded-xl">
           <StatCard
+            name="Sessions en cours"
+            value={dashboardStats?.sessionsEnCours}
+            icon={<Users size={18} />}
+          />
+          <StatCard
             name="Total Utilisateurs"
             value={dashboardStats?.totalUtilisateurs}
             icon={<Users size={18} />}
@@ -101,6 +106,31 @@ export default function DashboardPage() {
           <StatCard
             name="Sessions Planifiées"
             value={dashboardStats?.sessionsPlanifiees}
+            icon={<CalendarDaysIcon size={18} />}
+          />
+          <StatCard
+            name="Cours actifs"
+            value={dashboardStats?.coursActifs}
+            icon={<CalendarDaysIcon size={18} />}
+          />
+          <StatCard
+            name="Sessions Terminés"
+            value={dashboardStats?.sessionsTerminees}
+            icon={<CalendarDaysIcon size={18} />}
+          />
+          <StatCard
+            name="Total Inscriptions"
+            value={dashboardStats?.totalInscriptions}
+            icon={<CalendarDaysIcon size={18} />}
+          />
+          <StatCard
+            name="Taux de Presence"
+            value={dashboardStats?.tauxPresence}
+            icon={<CalendarDaysIcon size={18} />}
+          />
+          <StatCard
+            name="Taux de Reussite"
+            value={dashboardStats?.tauxReussite}
             icon={<CalendarDaysIcon size={18} />}
           />
         </div>

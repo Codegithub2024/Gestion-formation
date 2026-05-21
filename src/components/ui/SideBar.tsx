@@ -33,6 +33,7 @@ export default function SideBar() {
   const closeIconRef = useRef<SVGSVGElement>(null);
   const openIconRef = useRef<SVGSVGElement>(null);
   const logout = useAuthStore((state) => state.logout);
+  const user = useAuthStore((state) => state.user);
 
   // Timeline principale de la sidebar — créée une fois, pilotée ensuite
   const tlRef = useRef<gsap.core.Timeline | null>(null);
@@ -193,11 +194,13 @@ export default function SideBar() {
           </NavButton>
         </NavGroup>
 
-        <NavGroup isNavbarOpen={isOpen} groupName="Sécurité">
-          <NavButton isNavbarOpen={isOpen} to="/admin/audit" text="Sécurité">
-            <ShieldAlert size={20} />
-          </NavButton>
-        </NavGroup>
+        {user?.role === "ADMIN" && (
+          <NavGroup isNavbarOpen={isOpen} groupName="Sécurité">
+            <NavButton isNavbarOpen={isOpen} to="/admin/audit" text="Sécurité">
+              <ShieldAlert size={20} />
+            </NavButton>
+          </NavGroup>
+        )}
         <span className="flex-1 rounded-lg"></span>
         <button
           onClick={logout}

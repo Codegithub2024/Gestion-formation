@@ -49,7 +49,7 @@ export default function FormateurExterneTable({
                   {f.coursEnseignables.map((c) => (
                     <span
                       key={c.id}
-                      className="text-xs bg-neutral-100 text-neutral-600 px-2 py-0.5 rounded-full"
+                      className="text-xs border font-semibold border-black/10 bg-deep-amber/50 text-dark-amber px-2 py-0.5 rounded-full"
                     >
                       {c.titre}
                     </span>

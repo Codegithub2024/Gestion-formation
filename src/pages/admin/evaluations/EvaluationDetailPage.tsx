@@ -311,15 +311,7 @@ export default function EvaluationDetailPage() {
   const peutModifier = evaluation.statut === "PLANIFIEE";
 
   return (
-    <div className="flex flex-col gap-8 p-6">
-      {/* Navigation */}
-      <button
-        onClick={() => navigate("/admin/evaluations")}
-        className="text-sm text-neutral-500 hover:text-neutral-900 w-fit transition-colors"
-      >
-        ← Retour aux évaluations
-      </button>
-
+    <div className="flex flex-col gap-8">
       {/* En-tête */}
       <div className="flex justify-between items-start">
         <div className="flex flex-col gap-1">

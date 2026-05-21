@@ -52,7 +52,7 @@ export function Tr({ children }: { children: React.ReactNode }) {
 
 export function BodyTr({ children }: { children: React.ReactNode }) {
   return (
-    <tr className="hover:bg-neutral-50 transition-all duration-200 text-neutral-700">
+    <tr className="hover:bg-white transition-all duration-200 text-neutral-700">
       {children}
     </tr>
   );
