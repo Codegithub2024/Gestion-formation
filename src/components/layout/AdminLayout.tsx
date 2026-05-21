@@ -50,11 +50,11 @@ export default function AdminLayout() {
   }, [open]);
 
   return (
-    <div ref={contentRef} className="flex bg-primary-amber-text/5 relative">
+    <div ref={contentRef} className="flex bg-light relative">
       <SideBar />
 
-      <main className="p-2 pl-0 flex flex-col flex-1 h-screen overflow-hidden">
-        <div className="rounded-lg border border-neutral-200 flex relative flex-col min-h-full overflow-clip overflow-y-scroll flex-1">
+      <main className="p-2 pl-0 flex flex-col flex-1 z-50 h-screen overflow-hidden">
+        <div className="rounded-lg border-2 border-neutral-200 bg-light flex relative flex-col min-h-full overflow-clip overflow-y-scroll flex-1">
           <nav
             ref={navRef}
             className="border-b border-b-neutral-200 sticky z-10 bg-neutral-100/50 backdrop-blur-md top-0 right-0"

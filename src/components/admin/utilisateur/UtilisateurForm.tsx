@@ -65,7 +65,7 @@ export default function UtilisateurForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col rounded-2xl gap-4 w-full p-10"
+      className="flex flex-col rounded-2xl gap-4 w-full"
     >
       <div className="flex flex-col gap-4">
         <div className="flex gap-2 items-center">

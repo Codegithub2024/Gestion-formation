@@ -39,7 +39,7 @@ export default function SessionForm({
     dateDebut: session?.dateDebut?.slice(0, 16) ?? "",
     dateFin: session?.dateFin?.slice(0, 16) ?? "",
     lieu: session?.lieu ?? "",
-    capacite: session?.capaciteMax ?? 20,
+    capacite: session?.capacite ?? undefined,
   });
 
   // Un seul type de formateur à la fois
@@ -109,7 +109,7 @@ export default function SessionForm({
   };
 
   return (
-    <div className="flex flex-col gap-4 p-10">
+    <div className="flex flex-col gap-4">
       {/* Cours — non modifiable en édition */}
       {!estEnEdition && (
         <div className="flex flex-col gap-1.5">
@@ -173,7 +173,7 @@ export default function SessionForm({
         </div>
         <Input
           type="number"
-          name="capaciteMax"
+          name="capacite"
           min={1}
           value={form.capacite}
           onChange={handleChange}

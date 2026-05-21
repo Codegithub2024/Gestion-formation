@@ -43,7 +43,6 @@ async function getNewAccessToken(): Promise<string> {
 
   return refreshPromise;
 }
-
 export async function apiFetch<T = unknown>(
   url: string,
   options: RequestInit = {},
@@ -62,11 +61,11 @@ export async function apiFetch<T = unknown>(
   let token = useAuthStore.getState().accessToken;
   let res = await makeRequest(token);
 
-  // Access token expiré → on tente le refresh une fois
+  // Refresh token si 401
   if (res.status === 401) {
     try {
       token = await getNewAccessToken();
-      res = await makeRequest(token); // rejoue la requête avec le nouveau token
+      res = await makeRequest(token);
     } catch {
       throw new ApiError(401, "Session expirée — reconnectez-vous");
     }
@@ -74,11 +73,32 @@ export async function apiFetch<T = unknown>(
 
   if (res.status === 403) throw new ApiError(403, "Accès refusé");
   if (res.status === 404) throw new ApiError(404, "Ressource introuvable");
+
+  const text = await res.text(); // ✅ UNIQUE LECTURE
+
+  // Gestion erreurs HTTP
   if (!res.ok) {
-    const body = await res.json().catch(() => null);
-    throw new ApiError(res.status, body?.error ?? `Erreur ${res.status}`);
+    let message = `Erreur ${res.status}`;
+
+    try {
+      const err = text ? JSON.parse(text) : null;
+      message = err?.error || err?.message || message;
+    } catch {
+      message = text || message;
+    }
+
+    throw new ApiError(res.status, message);
   }
 
-  if (res.status === 204) return null as T;
-  return res.json() as Promise<T>;
+  // Cas 204 No Content
+  if (res.status === 204 || !text) {
+    return null as T;
+  }
+
+  // Parse JSON sécurisé
+  try {
+    return JSON.parse(text) as T;
+  } catch {
+    throw new ApiError(500, "Réponse invalide du serveur (JSON attendu)");
+  }
 }

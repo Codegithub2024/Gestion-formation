@@ -60,7 +60,7 @@ export default function SessionTable({
               <Td>
                 <StatutBadge statut={s.statut} />
               </Td>
-              <Td>{s.capaciteMax}</Td>
+              <Td>{s.capacite}</Td>
               <Td right>
                 <div className="flex justify-end gap-2">
                   <button

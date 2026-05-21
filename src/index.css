@@ -1,8 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
 @import "tailwindcss";
 
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Inter", sans-serif;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-neuton);
+}
+
+:root{
+  --grid-size: 24px;
+  --grid-color: rgb(234, 227, 220);
+  --grid-offset: calc(50% - (var(--grid-size) / 2));
+}
+
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--color-neutral-500);
@@ -30,11 +43,74 @@
   --color-primary-pink-text: #690044;
   --color-primary-red: #ff363a;
   --color-primary-red-text: #ffd6d7;
+  --color-primary: rgb(234, 227, 220);
+  --color-light: #F7F6F2;
+
+  /* --spacing-*: var(--spacing-*);
+  --color-*: var(--color-*); */
+
+  --font-baskerville: "Baskervville", serif;
+  --font-neuton: "Neuton", serif;
+}
+
+@utility font-serif {
+    font-family: "Zodiak", serif;
+}
+
+@utility bg-grid {
+
+  background-image:
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+  background-origin: border-box;
+
+  background-position: var(--grid-offset) var(--grid-offset);
+}
+
+@utility grid-color-* {
+  --grid-color: --value(--color-*);
+}
+
+@utility grid-size-* {
+  --grid-size: calc(--value(integer)px * 4);
+}
+
+@utility grid-animate { animation: grid-move-diag var(--grid-speed, 6s) linear infinite; }
+
+@utility grid-animate-r { animation: grid-move-r var(--grid-speed, 6s) linear infinite; }
+@utility grid-animate-l { animation: grid-move-l var(--grid-speed, 6s) linear infinite; }
+@utility grid-animate-b { animation: grid-move-b var(--grid-speed, 6s) linear infinite; }
+@utility grid-animate-t { animation: grid-move-t var(--grid-speed, 6s) linear infinite; }
+
+@keyframes grid-move-r {
+  from { background-position: var(--grid-offset) var(--grid-offset); }
+  to { background-position: calc(var(--grid-offset) + var(--grid-size)) var(--grid-offset); }
+}
+
+@keyframes grid-move-l {
+  from { background-position: var(--grid-offset) var(--grid-offset); }
+  to { background-position: calc(var(--grid-offset) - var(--grid-size)) var(--grid-offset); }
+}
+
+@keyframes grid-move-b {
+  from { background-position: var(--grid-offset) var(--grid-offset); }
+  to { background-position: var(--grid-offset) calc(var(--grid-offset) + var(--grid-size)); }
+}
+
+@keyframes grid-move-t {
+  from { background-position: var(--grid-offset) var(--grid-offset); }
+  to { background-position: var(--grid-offset) calc(var(--grid-offset) - var(--grid-size)); }
+}
+
+@keyframes grid-move-diag {
+  from { background-position: var(--grid-offset) var(--grid-offset); }
+  to { background-position: calc(var(--grid-offset) + var(--grid-size)) calc(var(--grid-offset) + var(--grid-size)); }
 }
 
 @layer base {
   .button {
-    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-4 cursor-pointer disabled:cursor-none transition-all duration-150 ease-out;
+    @apply rounded-lg relative overflow-hidden inline-flex justify-center items-center h-8 px-2 cursor-pointer disabled:cursor-none transition-all duration-150 ease-out hover:scale-[1.02] active:scale-[0.98] saturate-80 hover:saturate-100;
   }
 
   .button-text {
@@ -50,6 +126,7 @@
   }
 
   .input {
-    @apply ring-1 focus-within:ring-2 font-medium leading-none ring-offset-0 min-w-6 focus-within:ring-neutral-800 transition-all duration-200 ring-neutral-200 outline-none rounded-lg py-2 bg-white px-3 text-neutral-600 text-sm;
+    @apply ring-1 focus-within:ring-2 font-medium leading-none ring-offset-0 min-w-6 focus-within:ring-neutral-500 transition-all duration-200 ring-neutral-200 outline-none rounded-lg py-2 bg-white px-3 text-neutral-600 text-sm;
   }
 }
+

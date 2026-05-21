@@ -1,42 +1,48 @@
-// components/admin/sessions/ChangerStatutForm.tsx
+// components/admin/evaluations/ChangerStatutEvaluationForm.tsx
 import { useState } from "react";
-import type { StatutSession } from "../../../types/enums.types";
+import type { StatutEvaluation } from "../../../types/enums.types";
 
 type Props = {
-  statutActuel: StatutSession;
-  onSubmit: (statut: StatutSession) => void;
+  statutActuel: StatutEvaluation;
+  onSubmit: (statut: StatutEvaluation) => void;
   isLoading: boolean;
 };
 
-// Transitions valides selon le backend
-const TRANSITIONS: Record<StatutSession, StatutSession[]> = {
+const TRANSITIONS: Record<StatutEvaluation, StatutEvaluation[]> = {
   PLANIFIEE: ["EN_COURS", "ANNULEE"],
   EN_COURS: ["TERMINEE", "ANNULEE"],
   TERMINEE: [],
   ANNULEE: [],
 };
 
-const LABELS: Record<StatutSession, string> = {
+const LABELS: Record<StatutEvaluation, string> = {
   PLANIFIEE: "Planifiée",
-  EN_COURS: "La session démarre — les inscriptions sont closes",
-  TERMINEE: "La session est terminée — vous pouvez enregistrer les présences",
-  ANNULEE: "La session est annulée définitivement",
+  EN_COURS: "En cours",
+  TERMINEE: "Terminée",
+  ANNULEE: "Annulée",
 };
 
-export default function ChangerStatutForm({
+const DESCRIPTIONS: Record<StatutEvaluation, string> = {
+  EN_COURS: "Les candidats peuvent maintenant passer l'évaluation",
+  TERMINEE: "Plus aucun candidat ne peut soumettre de réponses",
+  ANNULEE: "L'évaluation est annulée définitivement",
+  PLANIFIEE: "",
+};
+
+export default function ChangerStatutEvaluationForm({
   statutActuel,
   onSubmit,
   isLoading,
 }: Props) {
   const transitions = TRANSITIONS[statutActuel];
-  const [selected, setSelected] = useState<StatutSession | "">(
+  const [selected, setSelected] = useState<StatutEvaluation | "">(
     transitions[0] ?? "",
   );
 
   if (transitions.length === 0) {
     return (
       <p className="text-sm text-neutral-500">
-        Aucun changement de statut possible depuis "{LABELS[statutActuel]}".
+        Aucun changement possible depuis "{LABELS[statutActuel]}".
       </p>
     );
   }
@@ -55,18 +61,25 @@ export default function ChangerStatutForm({
           <button
             key={statut}
             onClick={() => setSelected(statut)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg border text-left transition-colors ${
+            className={`flex flex-col gap-0.5 px-4 py-3 rounded-xl border text-left transition-all ${
               selected === statut
                 ? "border-neutral-900 bg-neutral-50"
                 : "border-neutral-200 hover:bg-neutral-50"
             }`}
           >
-            <span
-              className={`w-3 h-3 rounded-full ${
-                selected === statut ? "bg-neutral-900" : "bg-neutral-200"
-              }`}
-            />
-            <span className="text-sm font-medium">{LABELS[statut]}</span>
+            <div className="flex items-center gap-2">
+              <span
+                className={`w-3 h-3 rounded-full ${
+                  selected === statut ? "bg-neutral-900" : "bg-neutral-200"
+                }`}
+              />
+              <span className="text-sm font-medium">{LABELS[statut]}</span>
+            </div>
+            {DESCRIPTIONS[statut] && (
+              <p className="text-xs text-neutral-400 ml-5">
+                {DESCRIPTIONS[statut]}
+              </p>
+            )}
           </button>
         ))}
       </div>

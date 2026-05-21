@@ -8,6 +8,9 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Container from "../../components/ui/Container";
 import StatCard from "../../components/admin/StatCard";
+import { assets } from "../../assets/assets";
+import SvgAnimation from "../../components/ui/SvgAnimation";
+// import Svgdraw from "../../assets/tilda_2026-05-20_00-03-56.svg";
 
 gsap.registerPlugin(useGSAP);
 
@@ -15,6 +18,7 @@ export default function DashboardPage() {
   const user = useAuthStore((set) => set.user);
   const queryClient = useQueryClient();
   const dashboardRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
 
   console.log(user);
 
@@ -53,8 +57,12 @@ export default function DashboardPage() {
   return (
     <>
       <div className="flex w-full wrap-anywhere">
-        <h1 className="text-xl font-semibold tracking-tight lg:text-3xl text-neutral-800 leading-12">
-          <span className="text-neutral-500">Bienvenue</span> "{user?.prenom} {user?.nom}"
+        <h1 className="text-xl font-semibold flex gap-2 tracking-tight lg:text-3xl text-neutral-800 leading-12">
+          <p className="text-neutral-500">Bienvenue</p>
+          <div className="relative">
+            {user?.prenom} {user?.nom}
+            <SvgAnimation />
+          </div>
         </h1>
       </div>
 
@@ -62,7 +70,9 @@ export default function DashboardPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="bg-green-500 rounded-full size-2"></span>
-            <h4 className="text-2xl font-semibold tracking-tight text-neutral-800">Statistiques générales</h4>
+            <h4 className="text-2xl font-semibold tracking-tight text-neutral-800">
+              Statistiques générales
+            </h4>
           </div>
           <NavLink to="#">
             <p className="flex items-center gap-1 text-sm font-semibold transition-all duration-150 hover:text-neutral-800 text-neutral-500">
@@ -73,9 +83,21 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 rounded-xl">
-          <StatCard name="Total Utilisateurs" value={dashboardStats?.totalUtilisateurs} icon={<Users size={18} />} />
-          <StatCard name="Total Formateurs" value={dashboardStats?.totalFormateurs} icon={<Users size={18} />} />
-          <StatCard name="Total Candidats" value={dashboardStats?.totalCandidats} icon={<Users size={18} />} />
+          <StatCard
+            name="Total Utilisateurs"
+            value={dashboardStats?.totalUtilisateurs}
+            icon={<Users size={18} />}
+          />
+          <StatCard
+            name="Total Formateurs"
+            value={dashboardStats?.totalFormateurs}
+            icon={<Users size={18} />}
+          />
+          <StatCard
+            name="Total Candidats"
+            value={dashboardStats?.totalCandidats}
+            icon={<Users size={18} />}
+          />
           <StatCard
             name="Sessions Planifiées"
             value={dashboardStats?.sessionsPlanifiees}

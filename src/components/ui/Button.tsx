@@ -1,10 +1,11 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef, type MouseEventHandler } from "react";
+import { Plus } from "lucide-react";
 
 gsap.registerPlugin(useGSAP);
 
-type ButtonStyle = "blue" | "amber" | "black" | "red";
+type ButtonStyle = "amber" | "black" | "red";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
@@ -12,6 +13,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
   placeAfter?: boolean;
   buttonStyle?: ButtonStyle;
+  add?: boolean;
 }
 
 export default function Button({
@@ -19,9 +21,10 @@ export default function Button({
   state,
   children,
   placeAfter,
-  buttonStyle = "blue",
+  buttonStyle = "black",
   className: classname,
   onClick,
+  add,
 }: ButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
@@ -29,10 +32,9 @@ export default function Button({
 
   // Styles Tailwind par variante
   const styleMap: Record<ButtonStyle, string> = {
-    blue: "bg-blue-500 text-white hover:ring-primary-blue-text/50 active:ring-primary-blue-text",
     amber:
       "bg-primary-amber text-primary-amber-text hover:ring-primary-amber-text/50 active:ring-primary-amber-text",
-    black: "bg-neutral-800 text-neutral-50",
+    black: "bg-neutral-800 hover:bg-neutral-900 text-neutral-50",
     red: "bg-primary-red-text text-primary-red hover:ring-primary-red/50 active:ring-primary-red",
   };
 
@@ -51,11 +53,9 @@ export default function Button({
           </span>
         </div>
       ) : (
-        <p
-          ref={textRef}
-          className="button-text group-active:scale-[0.98] group-hover:scale-[1.03] duration-150 transition-all"
-        >
+        <p ref={textRef} className="button-text">
           {!placeAfter && children}
+          {add && <Plus size={16} className="stroke-3" />}
           {text}
           {placeAfter && children}
         </p>

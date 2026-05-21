@@ -103,7 +103,7 @@ export default function CandidatSondagesPage() {
                         }`}
                       >
                         <span
-                          className={`w-4 h-4 rounded-full border-2 flex-shrink-0 ${
+                          className={`w-4 h-4 rounded-full border-2 shrink-0 ${
                             reponses[q.id]?.optionId === opt.id
                               ? "border-white bg-white"
                               : "border-neutral-300"

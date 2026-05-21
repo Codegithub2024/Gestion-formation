@@ -14,7 +14,7 @@ export default function ConfirmSuppression({
   onAnnuler,
 }: Props) {
   return (
-    <div className="flex flex-col gap-4 p-10">
+    <div className="flex flex-col gap-4">
       <p className="text-sm text-neutral-700">{message}</p>
       {detail && <p className="text-sm text-neutral-400">{detail}</p>}
       <div className="flex justify-end gap-2 mt-2">

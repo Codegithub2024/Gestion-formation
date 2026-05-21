@@ -26,6 +26,10 @@ import CandidatEvaluationsPage from "../pages/candidat/CandidatEvaluationsPage";
 import CandidatEvaluationPasserPage from "../pages/candidat/CandidatEvaluationPasserPage";
 import CandidatSondagesPage from "../pages/candidat/CandidatSondagesPage";
 import CandidatProfilPage from "../pages/candidat/CandidatProfilPage";
+import EvaluationDetailPage from "../pages/admin/evaluations/EvaluationDetailPage";
+import SondageDetailPage from "../pages/admin/sondages/SondageDetailPage";
+import CandidatsPage from "../pages/admin/candidats/CandidatsPage";
+import CandidatDetailPage from "../pages/admin/candidats/CandidatDetailPage";
 
 function AdminGuard({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, hasRole } = useAuthStore();
@@ -86,6 +90,21 @@ export const router = createBrowserRouter([
         handle: { crumb: () => "Formateurs" },
       },
       {
+        path: "candidats",
+        handle: { crumb: () => "Candidats" },
+        children: [
+          {
+            index: true,
+            element: <CandidatsPage />,
+          },
+          {
+            path: ":id",
+            element: <CandidatDetailPage />,
+            handle: { crumb: () => "detail candidat" },
+          },
+        ],
+      },
+      {
         path: "cours",
         element: <CoursPage />,
         handle: { crumb: () => "Cours" },
@@ -112,13 +131,33 @@ export const router = createBrowserRouter([
       },
       {
         path: "evaluations",
-        element: <EvalutationsPage />,
         handle: { crumb: () => "Evaluations" },
+        children: [
+          {
+            index: true,
+            element: <EvalutationsPage />,
+          },
+          {
+            path: ":id",
+            element: <EvaluationDetailPage />,
+            handle: { crumb: () => "detail evaluation" },
+          },
+        ],
       },
       {
         path: "sondages",
-        element: <SondagesPage />,
         handle: { crumb: () => "Sondages" },
+        children: [
+          {
+            index: true,
+            element: <SondagesPage />,
+          },
+          {
+            path: ":id",
+            element: <SondageDetailPage />,
+            handle: { crumb: () => "detail sondage" },
+          },
+        ],
       },
       {
         path: "audit",

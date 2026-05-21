@@ -57,7 +57,7 @@ export default function FormateurExterneForm({
   ];
 
   return (
-    <div className="flex flex-col gap-2 p-10">
+    <div className="flex flex-col gap-2">
       {fields.map((field) => (
         <div key={field.name} className="flex flex-col gap-1.5">
           <Input

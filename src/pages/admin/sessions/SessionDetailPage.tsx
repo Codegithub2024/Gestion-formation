@@ -13,6 +13,9 @@ import ChangerStatutForm from "../../../components/admin/sessions/ChangerStatutF
 import InscriptionTable from "../../../components/admin/sessions/InscriptionTable";
 import PresencesForm from "../../../components/admin/sessions/PresencesForm";
 import ConfirmSuppression from "../../../components/ui/ConfirmSuppression";
+import { convocationService } from "../../../services/convocation.service";
+import ConvocationList from "../../../components/admin/sondages/ConvocationList";
+
 import type {
   UpdateSessionRequest,
   EnregistrerPresencesRequest,
@@ -28,7 +31,7 @@ export default function SessionDetailPage() {
 
   // Filtre actif sur les inscriptions
   const [filtreInscription, setFiltreInscription] = useState<
-    StatutInscription | "TOUS"
+    StatutInscription | "TOUS" | "convocations" | "convocations-candidats"
   >("TOUS");
 
   // ── Queries ───────────────────────────────────────────────────────────────
@@ -55,6 +58,11 @@ export default function SessionDetailPage() {
   const { data: formateursExternes = [] } = useQuery({
     queryKey: ["formateurs-externes"],
     queryFn: formateurService.getAllExternes,
+  });
+
+  const { data: convocations = [], refetch: refetchConvocations } = useQuery({
+    queryKey: ["convocations", sessionId],
+    queryFn: () => convocationService.getBySession(sessionId),
   });
 
   // ── Mutations ─────────────────────────────────────────────────────────────
@@ -143,6 +151,26 @@ export default function SessionDetailPage() {
     onError: (err: Error) => toast.error(err.message),
   });
 
+  const envoyerCandidatsMutation = useMutation({
+    mutationFn: () => convocationService.envoyerCandidats(sessionId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["convocations", sessionId] });
+      toast.success("Convocations envoyées aux candidats");
+      close();
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
+
+  const envoyerFormateurMutation = useMutation({
+    mutationFn: () => convocationService.envoyerFormateur(sessionId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["convocations", sessionId] });
+      toast.success("Convocation envoyée au formateur");
+      close();
+    },
+    onError: (err: Error) => toast.error(err.message),
+  });
+
   // ── Handlers ──────────────────────────────────────────────────────────────
   const handleModifier = () => {
     if (!session) return;
@@ -220,6 +248,33 @@ export default function SessionDetailPage() {
     );
   };
 
+  const handleEnvoyerConvocationsCandidats = () => {
+    const inscritesConfirmees = inscriptions.filter(
+      (i) => i.statut === "CONFIRMEE",
+    );
+    open(
+      "Envoyer les convocations",
+      <ConfirmSuppression
+        message={`Envoyer une convocation aux ${inscritesConfirmees.length} candidat(s) confirmé(s) ?`}
+        isLoading={envoyerCandidatsMutation.isPending}
+        onConfirm={() => envoyerCandidatsMutation.mutate()}
+        onAnnuler={close}
+      />,
+    );
+  };
+
+  const handleEnvoyerConvocationFormateur = () => {
+    open(
+      "Convoquer le formateur",
+      <ConfirmSuppression
+        message={`Envoyer la convocation à ${formateurNom} ?`}
+        isLoading={envoyerFormateurMutation.isPending}
+        onConfirm={() => envoyerFormateurMutation.mutate()}
+        onAnnuler={close}
+      />,
+    );
+  };
+
   // ── Inscriptions filtrées ─────────────────────────────────────────────────
   const inscriptionsFiltrees =
     filtreInscription === "TOUS"
@@ -263,6 +318,17 @@ export default function SessionDetailPage() {
 
           {/* Actions principales */}
           <div className="flex gap-2">
+            {session.statut !== "ANNULEE" && (
+              <div className="flex gap-2 flex-wrap">
+                <button
+                  onClick={handleEnvoyerConvocationsCandidats}
+                  disabled={comptes.CONFIRMEE === 0}
+                  className="text-sm px-3 py-1.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 disabled:opacity-50 transition-colors"
+                >
+                  📧 Convoquer les candidats ({comptes.CONFIRMEE})
+                </button>
+              </div>
+            )}
             <button
               onClick={handleModifier}
               className="text-sm px-3 py-1.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
@@ -299,7 +365,7 @@ export default function SessionDetailPage() {
           <InfoCard label="Lieu" value={session.lieu ?? "Non défini"} />
           <InfoCard
             label="Capacité"
-            value={`${comptes.CONFIRMEE} / ${session.capaciteMax} confirmé(s)`}
+            value={`${comptes.CONFIRMEE} / ${session.capacite} confirmé(s)`}
           />
         </div>
 
@@ -330,18 +396,27 @@ export default function SessionDetailPage() {
                 Retirer
               </button>
             )}
+            {formateurNom && (
+              <button
+                onClick={handleEnvoyerConvocationFormateur}
+                className="text-sm px-3 py-1.5 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
+              >
+                📧 Convoquer le formateur
+              </button>
+            )}
           </div>
         </div>
       </div>
 
       {/* ── Inscriptions ────────────────────────────────────────────────────── */}
+
       <div className="flex flex-col gap-4">
         <h2 className="text-base font-semibold">
           Inscriptions ({inscriptions.length})
         </h2>
 
         {/* Onglets de filtre par statut */}
-        <div className="flex gap-1 flex-wrap bg-black/5 w-fit p-1 rounded-full">
+        <div className="flex overflow-hidden flex-wrap bg-black/5 w-fit ring ring-neutral-200 rounded-xl">
           {(
             [
               { key: "TOUS", label: "Tous", count: inscriptions.length },
@@ -361,12 +436,22 @@ export default function SessionDetailPage() {
                 count: comptes.LISTE_ATTENTE,
               },
               { key: "ANNULEE", label: "Annulées", count: comptes.ANNULEE },
+              {
+                key: "inscriptions",
+                label: `Inscriptions (${inscriptions.length})`,
+                count: inscriptions.length,
+              },
+              {
+                key: "convocations",
+                label: `Convocations (${convocations.length})`,
+                count: convocations.length,
+              },
             ] as const
           ).map((filtre) => (
             <button
               key={filtre.key}
               onClick={() => setFiltreInscription(filtre.key as any)}
-              className={`px-3 py-2 font-medium text-xs rounded-full transition-colors flex items-center gap-1 ${
+              className={`px-3 py-2 font-medium text-xs rounded transition-colors flex items-center gap-1 ${
                 filtreInscription === filtre.key
                   ? "bg-white text-neutral-800"
                   : " text-neutral-600 hover:bg-black/5"
@@ -386,15 +471,19 @@ export default function SessionDetailPage() {
           ))}
         </div>
 
-        <InscriptionTable
-          inscriptions={inscriptionsFiltrees}
-          isLoading={loadingInscriptions}
-          sessionStatut={session.statut}
-          onConfirmer={(id) => confirmerMutation.mutate(id)}
-          onAnnuler={(id) => annulerMutation.mutate(id)}
-          isConfirming={confirmerMutation.isPending}
-          isAnnuling={annulerMutation.isPending}
-        />
+        {filtreInscription === "convocations" ? (
+          <ConvocationList convocations={convocations} />
+        ) : (
+          <InscriptionTable
+            inscriptions={inscriptionsFiltrees}
+            isLoading={loadingInscriptions}
+            sessionStatut={session.statut}
+            onConfirmer={(id) => confirmerMutation.mutate(id)}
+            onAnnuler={(id) => annulerMutation.mutate(id)}
+            isConfirming={confirmerMutation.isPending}
+            isAnnuling={annulerMutation.isPending}
+          />
+        )}
       </div>
     </div>
   );

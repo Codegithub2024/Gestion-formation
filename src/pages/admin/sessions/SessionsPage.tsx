@@ -12,6 +12,8 @@ import ConfirmSuppression from "../../../components/ui/ConfirmSuppression";
 import type { Session } from "../../../types/session.types";
 import type { CreateSessionRequest } from "../../../types/requests.types";
 import type { ApiError } from "../../../api/base.api";
+import Button from "../../../components/ui/Button";
+import { Plus } from "lucide-react";
 
 export default function SessionsPage() {
   const navigate = useNavigate();
@@ -97,12 +99,13 @@ export default function SessionsPage() {
             {sessions.length} session(s)
           </p>
         </div>
-        <button
+        <Button
           onClick={handleCreer}
-          className="bg-neutral-900 text-white text-sm px-4 py-2 rounded-lg"
+          text="Nouvelle session"
+          buttonStyle="amber"
         >
-          Nouvelle session
-        </button>
+          <Plus size={18} />
+        </Button>
       </div>
 
       <SessionTable

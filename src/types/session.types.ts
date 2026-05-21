@@ -10,7 +10,7 @@ export type Session = BaseEntity & {
   dateDebut: string;
   dateFin: string;
   lieu: string | null;
-  capaciteMax: number;
+  capacite: number;
   statut: StatutSession;
   inscriptions: Inscription[];
 };

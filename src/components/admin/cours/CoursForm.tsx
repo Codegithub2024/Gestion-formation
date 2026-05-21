@@ -83,7 +83,7 @@ export default function CoursForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full p-10">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
       <div className="flex flex-col gap-2">
         <Input
           name="titre"

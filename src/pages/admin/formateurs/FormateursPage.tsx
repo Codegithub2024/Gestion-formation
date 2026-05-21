@@ -332,12 +332,12 @@ export default function FormateursPage() {
       </div>
 
       {/* Onglets */}
-      <div className="flex gap-1 bg-black/5 p-1 rounded-full w-fit">
+      <div className="flex gap-1 ring-1 ring-black/10 overflow-hidden bg-black/5 rounded-xl w-fit">
         {(["internes", "externes"] as Onglet[]).map((o) => (
           <button
             key={o}
             onClick={() => setOnglet(o)}
-            className={`px-4 py-1.5 text-sm rounded-full transition-all capitalize ${
+            className={`px-4 py-1.5 text-sm rounded transition-all capitalize ${
               onglet === o
                 ? "bg-white text-neutral-900 font-medium shadow-sm"
                 : "text-neutral-500 hover:text-neutral-700"

@@ -1,6 +1,6 @@
 export default function Table({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full overflow-x-auto shadow overflow-hidden border border-neutral-200 rounded-2xl bg-white">
+    <div className="w-full overflow-x-auto overflow-hidden">
       <table className="text-neutral-800 whitespace-nowrap w-full">
         {children}
       </table>

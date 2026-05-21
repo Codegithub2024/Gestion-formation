@@ -41,15 +41,15 @@ export default function CandidatLayout() {
           </span>
 
           {/* Navigation centrale */}
-          <nav className="flex items-center gap-1">
+          <nav className="flex items-center rounded-xl overflow-hidden">
             {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+                  `button gap-2 py-3 px-3 rounded ${
                     isActive
-                      ? "bg-neutral-900 text-white"
+                      ? "bg-primary-amber text-primary-amber-text hover:ring-primary-amber-text/50 active:ring-primary-amber-text"
                       : "text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100"
                   }`
                 }
@@ -61,11 +61,11 @@ export default function CandidatLayout() {
           </nav>
 
           {/* Profil + déconnexion */}
-          <div className="flex items-center gap-2">
+          <div className="flex rounded-xl ring-1 ring-black/10 divide-x divide-black/10 overflow-hidden">
             <NavLink
               to="/candidat/profil"
               className={({ isActive }) =>
-                `flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition-colors ${
+                `flex items-center gap-2 px-3 py-2 text-sm transition-colors ${
                   isActive
                     ? "bg-neutral-900 text-white"
                     : "text-neutral-500 hover:bg-neutral-100"
@@ -75,13 +75,17 @@ export default function CandidatLayout() {
               <User size={15} />
               <span className="hidden sm:inline">{user?.prenom}</span>
             </NavLink>
-            <button
+            <div
+              className="flex-1 hover:text-neutral-600 px-2 hover:bg-neutral-100 transition-colors flex justify-center items-center"
               onClick={() => logoutMutation.mutate()}
-              className="p-2 text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 rounded-lg transition-colors"
-              title="Se déconnecter"
             >
-              <LogOut size={15} />
-            </button>
+              <button
+                className="text-neutral-400 flex-1 h-full transition-colors"
+                title="Se déconnecter"
+              >
+                <LogOut size={15} />
+              </button>
+            </div>
           </div>
         </div>
       </header>

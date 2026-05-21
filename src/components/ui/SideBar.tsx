@@ -5,7 +5,9 @@ import {
   CalendarDays,
   Database,
   GraduationCap,
+  List,
   LogOut,
+  Pencil,
   ShieldAlert,
   Tag,
   Users,
@@ -116,7 +118,7 @@ export default function SideBar() {
   return (
     <aside
       ref={asideRef}
-      className="flex z-1000 flex-col sticky top-0 left-0 h-screen"
+      className="flex z-0 flex-col sticky top-0 left-0 h-screen"
       // Pas de classe w-* : GSAP est seul maître de la largeur
     >
       <div className="flex justify-end py-2 p-2">
@@ -145,7 +147,7 @@ export default function SideBar() {
           </NavButton>
         </NavGroup>
 
-        <NavGroup isNavbarOpen={isOpen} groupName="Gestion">
+        <NavGroup isNavbarOpen={isOpen} groupName="Utilisateurs">
           <NavButton
             isNavbarOpen={isOpen}
             to="/admin/utilisateurs"
@@ -160,6 +162,16 @@ export default function SideBar() {
           >
             <GraduationCap size={20} />
           </NavButton>
+          <NavButton
+            to="/admin/candidats"
+            text="Candidats"
+            isNavbarOpen={isOpen}
+          >
+            <Users size={20} />
+          </NavButton>
+        </NavGroup>
+
+        <NavGroup isNavbarOpen={isOpen} groupName="Gestion">
           <NavButton isNavbarOpen={isOpen} to="/admin/cours" text="Cours">
             <BookOpen size={20} />
           </NavButton>
@@ -169,6 +181,16 @@ export default function SideBar() {
           <NavButton isNavbarOpen={isOpen} to="/admin/sessions" text="Sessions">
             <CalendarDays size={20} />
           </NavButton>
+          <NavButton
+            isNavbarOpen={isOpen}
+            to="/admin/evaluations"
+            text="Evaluations"
+          >
+            <Pencil size={20} />
+          </NavButton>
+          <NavButton isNavbarOpen={isOpen} to="/admin/sondages" text="Sondages">
+            <List size={20} />
+          </NavButton>
         </NavGroup>
 
         <NavGroup isNavbarOpen={isOpen} groupName="Sécurité">
@@ -177,7 +199,10 @@ export default function SideBar() {
           </NavButton>
         </NavGroup>
         <span className="flex-1 rounded-lg"></span>
-        <button onClick={logout} className="nav-button h-fit hover:bg-black/10">
+        <button
+          onClick={logout}
+          className="nav-button h-fit self-end w-fit hover:bg-black/10"
+        >
           <LogOut size={20} strokeWidth={3} className="text-neutral-600" />
         </button>
       </nav>

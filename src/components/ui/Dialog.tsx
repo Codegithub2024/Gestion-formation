@@ -34,10 +34,11 @@ export default function Dialog() {
       className={`fixed inset-0 z-5000 transition-all duration-300 flex overflow-y-scroll py-10 items-center-safe justify-center-safe ${isOpen ? "opacity-100" : "opacity-0"}`}
     >
       <div className="absolute inset-0 bg-black/10 backdrop-blur-xs"></div>
+      <div className="absolute inset-0 bg-grid grid-color-black opacity-5"></div>
       <div className="relative flex flex-col z-10 gap-3 w-full max-w-md mx-4">
         <button
           onClick={close}
-          className="text-red-50 absolute cursor-pointer hover:brightness-95 duration-150 top-1 right-1 p-1.5 active:scale-95 bg-red-500 ring-2 ring-red-500 border border-white hover:scale-[1.02] rounded-full transition-all flex items-center justify-center"
+          className="text-red-50 absolute cursor-pointer hover:brightness-95 duration-150 top-1 right-1 px-4 p-1.5 active:scale-95 bg-red-500 ring-2 ring-red-500 border border-white hover:scale-[1.02] rounded-full transition-all flex items-center justify-center"
         >
           <X size={16} strokeWidth={3} />
         </button>
@@ -48,7 +49,9 @@ export default function Dialog() {
             </h2>
           </div>
         )}
-        <div className="bg-white rounded-2xl">{content}</div>
+        <div className="bg-white rounded-2xl p-6 border border-neutral-500">
+          {content}
+        </div>
       </div>
     </div>
   );

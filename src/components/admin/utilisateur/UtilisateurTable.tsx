@@ -24,7 +24,7 @@ export default function UtilisateurTable({
             size={12}
           />
         )}
-        {role.charAt(0).toUpperCase()}
+        {nom.charAt(0).toUpperCase()}
       </div>
     );
   }
